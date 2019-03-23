@@ -30,6 +30,7 @@ public class MainView{
                     break;
                 case 3:
                     System.out.println("Tạm biệt, hẹn gặp lại!");
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Lựa chọn sai!, vui lòng chọn 1 hoặc 2.");
