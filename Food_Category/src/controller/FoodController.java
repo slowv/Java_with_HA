@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class FoodController implements ApplicationController {
 
-    private ArrayList<Food> foodArrayList = new ArrayList<>();
+    public static ArrayList<Food> foodArrayList = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
 
     @Override

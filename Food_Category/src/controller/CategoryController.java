@@ -1,6 +1,7 @@
 package controller;
 
 import enity.Category;
+import enity.Food;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -194,6 +195,15 @@ public class CategoryController implements ApplicationController {
 
                     switch (choiceRemove) {
                         case 1:
+                            if (!FoodController.foodArrayList.isEmpty()){
+                                for (Food itemFood : FoodController.foodArrayList){
+                                    if (category.getCode().equals(itemFood.getCategoryId())){
+                                        System.out.println("Hiện đang có món ăn thuộc danh mục này, nên không thể xóa danh mục này!");
+                                        System.out.println("===>> Vui lòng xóa món ăn đó trước!");
+                                        return;
+                                    }
+                                }
+                            }
                             for (int i = 0; i < categoryArrayList.size(); i++) {
                                 if (!category.getCode().isEmpty()){
                                     if (category.getCode().equals(categoryArrayList.get(i).getCode())){
