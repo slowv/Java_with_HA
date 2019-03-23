@@ -1,11 +1,18 @@
-       ====           ===                 =====       ===                        ===                     ===            ===
-    ===    ===        ===             ===       ===    ===                      ===                       ===          ===
-   ====               ===             ===       ===     ===         ==         ===                         ===        ===
-     =====            ===             ===       ===      ===      ======      ===        ****  ****         ===      ===
-        =====         ===             ===       ===       ===    ===  ===    ===       **************        ===    ===
-           ====       ===             ===       ===        ===  ===    ===  ===         ************          ===  === 
-    ===   ====        ===========     ===       ===         ======      ======            ********             ======
-      ======          ===========         =====               ==          ==                 **                  ==
-    
-    
-<strong> CODE cùng người THƯƠNG nó khác bọt hẳn :))~ </trong>
+# ______SlowV ❤___ ❀◕ ‿ ◕❀   ❤A___
+
+[![N|Solid](https://lh3.ggpht.com/-IiRH1nVDQl8/WJaQI_UNUdI/AAAAAAAAHaw/25VllQSgJNkasnHCsGqIGGJbD_ch7A_UgCEw/s1600/trai-tim%2B%25281%2529.jpg)]()
+
+Tổng hợp tất cả project JAVA được viêt bơi SlowV.
+
+  - Auto chạy
+  - Ưu tiên chạy
+  - Chạy dược là ok  (>‿◠)✌
+
+
+# Cảm hứng!
+
+  - Từ bạn nữ ngồi kế
+
+
+
+# Code cùng người THƯƠNG nó khác bọt hẳn (¬‿¬)"
