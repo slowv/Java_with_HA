@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class CategoryController implements ApplicationController {
 
-    private ArrayList<Category> categoryArrayList = new ArrayList<>();
+    public static ArrayList<Category> categoryArrayList = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
 
     @Override
@@ -25,18 +25,20 @@ public class CategoryController implements ApplicationController {
             String description = sc.nextLine();
 
             Category category = new Category(code, name, description);
-            boolean checkExistCode = category.checkExistCode(categoryArrayList);
+            if (!categoryArrayList.isEmpty()){
+                boolean checkExistCode = category.checkExistCode(categoryArrayList);
 
-            if(checkExistCode){
-                while (checkExistCode){
-                    System.out.println("Mã danh mục đã tồn tại! Vui lòng nhập mã khác.\n");
-                    System.out.println("Nhập mã danh mục mới hoặc ấn HUY để quay lại: ");
-                    code = sc.nextLine();
+                if(checkExistCode){
+                    while (checkExistCode){
+                        System.out.println("Mã danh mục đã tồn tại! Vui lòng nhập mã khác.\n");
+                        System.out.println("Nhập mã danh mục mới hoặc ấn HUY để quay lại: ");
+                        code = sc.nextLine();
 
-                    if (code.equals("HUY")) return;
+                        if (code.equals("HUY")) return;
 
-                    category.setCode(code);
-                    checkExistCode = category.checkExistCode(categoryArrayList);
+                        category.setCode(code);
+                        checkExistCode = category.checkExistCode(categoryArrayList);
+                    }
                 }
             }
 
@@ -58,29 +60,36 @@ public class CategoryController implements ApplicationController {
 
     @Override
     public void readList() {
-        if (categoryArrayList.isEmpty()) {
-            categoryArrayList.add(new Category("A001", "Danh mục 1", "Rất là ngon nếu món ăn ở danh mục này"));
-            categoryArrayList.add(new Category("A002", "Danh mục 2", "Rất là ngon nếu món ăn ở danh mục này"));
-        }
+//        if (categoryArrayList.isEmpty()) {
+//            categoryArrayList.add(new Category("A001", "Món ngon Hà Nội", "Tất cả món ăn ngon ở Hà Nội"));
+//            categoryArrayList.add(new Category("A002", "Món ngon Huế", "Tất cả món ăn ngon ở Huế"));
+//            categoryArrayList.add(new Category("A003", "Món ngon Nha Trang", "Tất cả món ăn ngon ở Nha Trang"));
+//            categoryArrayList.add(new Category("A004", "Món ngon Đà Nẵng", "Tất cả món ăn ngon ở Đà Nẵng"));
+//            categoryArrayList.add(new Category("A005", "Món ngon Sài Gòn", "Tất cả món ăn ngon ở Sài Gòn"));
+//        }
+        if (!categoryArrayList.isEmpty()){
 
-        System.out.println("Tổng số danh mục: " + categoryArrayList.size() + "\t \t \t \t \t \t \t \t \t DANH SÁCH DANH MỤC\n");
-        System.out.println("------------------------------------------------------------" +
-                "-----------------------------------------------------------------------------------------------------");
-        System.out.println(String.format(" %-9s|", "STT")
-                + String.format(" %-45s|", " ID")
-                + String.format(" %-20s|", " Tên")
-                + String.format(" %-20s|", " Mã")
-                + String.format(" %-30s", " Mô tả"));
-        System.out.println("------------------------------------------------------------" +
-                "-----------------------------------------------------------------------------------------------------");
-        for (int i = 0; i < categoryArrayList.size(); i++) {
-            System.out.println(String.format(" %-9d| ", i + 1)
-                    + String.format(" %-44s| ", categoryArrayList.get(i).getId())
-                    + String.format(" %-19s| ", categoryArrayList.get(i).getName())
-                    + String.format(" %-19s| ", categoryArrayList.get(i).getCode())
-                    + String.format(" %-30s", categoryArrayList.get(i).getDescription()));
+            System.out.println("Tổng số danh mục: " + categoryArrayList.size() + "\t \t \t \t \t \t \t \t \t DANH SÁCH DANH MỤC\n");
             System.out.println("------------------------------------------------------------" +
                     "-----------------------------------------------------------------------------------------------------");
+            System.out.println(String.format(" %-9s|", "STT")
+                    + String.format(" %-45s|", " ID")
+                    + String.format(" %-20s|", " Tên")
+                    + String.format(" %-20s|", " Mã")
+                    + String.format(" %-30s", " Mô tả"));
+            System.out.println("------------------------------------------------------------" +
+                    "-----------------------------------------------------------------------------------------------------");
+            for (int i = 0; i < categoryArrayList.size(); i++) {
+                System.out.println(String.format(" %-9d| ", i + 1)
+                        + String.format(" %-44s| ", categoryArrayList.get(i).getId())
+                        + String.format(" %-19s| ", categoryArrayList.get(i).getName())
+                        + String.format(" %-19s| ", categoryArrayList.get(i).getCode())
+                        + String.format(" %-30s", categoryArrayList.get(i).getDescription()));
+                System.out.println("------------------------------------------------------------" +
+                        "-----------------------------------------------------------------------------------------------------");
+            }
+        }else{
+            System.out.println("Hiện không có danh mục nào!");
         }
         System.out.println("<====  Ấn enter để quay lại!");
         sc.nextLine();

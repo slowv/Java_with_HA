@@ -1,5 +1,6 @@
 package enity;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Food {
@@ -8,17 +9,58 @@ public class Food {
     private String description;
     private double price;
     private String categoryId;
+    private String code;
 
     public Food() {
     }
 
-    public Food( String name, String description, double price, String categoryId) {
+    public Food(String name, String description, double price, String categoryId, String code) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
         this.price = price;
         this.categoryId = categoryId;
+        this.code = code;
     }
+
+    public String printList(ArrayList<Food> foods, ArrayList<Category> categories) {
+        String content = null;
+        if (!foods.isEmpty()){
+            String categoryName = "";
+            content = "Tổng số món ăn: " + foods.size() + "\t \t \t \t \t \t \t \t \t DANH SÁCH MÓN ĂN \n";
+            content += String.format(" %-5s|", "STT")
+                    + String.format(" %-45s|", " ID")
+                    + String.format(" %-20s|", " Tên")
+                    + String.format(" %-20s|", " Mã")
+                    + String.format(" %-25s", " Danh mục")
+                    + String.format(" %-30s", " Mô tả") + "\n";
+            content += "------------------------------------------------------------" +
+                    "-----------------------------------------------------------------------------------------------------\n";
+            for (int i = 0; i < foods.size(); i++) {
+
+                if (!categories.isEmpty()){
+                    for (Category category : categories){
+                        if (foods.get(i).getCategoryId().equals(category.getCode())){
+                            categoryName = category.getName();
+                        }else {
+                            categoryName = "Không có danh mục";
+                        }
+                    }
+                }
+
+                content += String.format(" %-5d| ", i + 1)
+                        + String.format(" %-44s| ", foods.get(i).getId())
+                        + String.format(" %-19s| ", foods.get(i).getName())
+                        + String.format(" %-19s| ", foods.get(i).getCode())
+                        + String.format(" %-24s| ", categoryName)
+                        + String.format(" %-30s", foods.get(i).getDescription()) + "\n";
+                System.out.println("------------------------------------------------------------" +
+                        "-----------------------------------------------------------------------------------------------------\n");
+            }
+        }
+        return content;
+    }
+
 
     public String getId() {
         return id;
@@ -26,6 +68,14 @@ public class Food {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -58,5 +108,17 @@ public class Food {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", categoryId='" + categoryId + '\'' +
+                ", code='" + code + '\'' +
+                '}';
     }
 }

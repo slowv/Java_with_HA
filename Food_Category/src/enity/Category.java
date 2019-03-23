@@ -19,6 +19,11 @@ public class Category {
         this.code = code;
     }
 
+    public Category(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
+
     public Category findCategory(ArrayList<Category> categories, String code) {
         Category category = new Category();
         if (!categories.isEmpty()) {
@@ -39,13 +44,28 @@ public class Category {
         content += "----------------------------------------------------------------------------------------------------------------------------------------------------------------- \n";
         content += String.format(" %-45s|", " ID") + String.format(" %-20s|", " Tên") + String.format(" %-20s|", " Mã") + String.format(" %-30s", " Mô tả") + "\n";
         content += "----------------------------------------------------------------------------------------------------------------------------------------------------------------- \n";
-        content += String.format(" %-45s| ", this.id)+ String.format(" %-19s| ", this.name)+ String.format(" %-19s| ", this.code)+ String.format(" %-30s", this.description) + "\n";
+        content += String.format(" %-45s| ", this.id) + String.format(" %-19s| ", this.name) + String.format(" %-19s| ", this.code) + String.format(" %-30s", this.description) + "\n";
         content += "-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
         return content;
     }
 
-    public boolean checkExistCode(ArrayList<Category> categories){
-        for (Category item : categories){
+    public String tempoListCategory(ArrayList<Category> categories) {
+        String content = null;
+        if (!categories.isEmpty()){
+            content = String.format("%10s|", "Mã") + String.format("%20s", "Tên danh mục") + "\n";
+            content += "-----------------------------------------------\n";
+            int count = 2;
+            for (int i = 0; i < categories.size(); i++) {
+                content += String.format("%10s|", categories.get(i).getCode()) + String.format("%20s", categories.get(i).getName());
+                content += ("\n");
+                content += "-----------------------------------------------\n";
+            }
+        }
+        return content;
+    }
+
+    public boolean checkExistCode(ArrayList<Category> categories) {
+        for (Category item : categories) {
             if (this.code.equals(item.getCode())) return true;
         }
         return false;
