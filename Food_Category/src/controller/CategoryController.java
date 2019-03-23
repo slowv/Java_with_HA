@@ -104,20 +104,22 @@ public class CategoryController implements ApplicationController {
                         case 1:
                             System.out.println("Mã danh mục mới(ấn S để bỏ qua không cập nhật mã danh mục): ");
                             String codeUpdate = sc.nextLine();
-                            if (codeUpdate.equals("S")) codeUpdate = category.getCode();
 
                             System.out.println("Tên danh mục mới(ấn S để bỏ qua không cập nhật tên danh mục): ");
                             String nameUpdate = sc.nextLine();
-                            if (nameUpdate.equals("S")) nameUpdate = category.getName();
 
                             System.out.println("Mô tả danh mục mới(ấn S để bỏ qua không cập nhật mô tả danh mục): ");
                             String descriptionUpdate = sc.nextLine();
-                            if (descriptionUpdate.equals("S")) descriptionUpdate = category.getDescription();
 
                             if (codeUpdate.equals("S") && nameUpdate.equals("S") && descriptionUpdate.equals("S")){
                                 System.out.println("Bịp à ko update cái gì thì vào đây làm gì?");
                                 return;
                             }
+
+                            if (codeUpdate.equals("S")) codeUpdate = category.getCode();
+                            if (descriptionUpdate.equals("S")) descriptionUpdate = category.getDescription();
+                            if (nameUpdate.equals("S")) nameUpdate = category.getName();
+
                             Category categoryUpdate = new Category(codeUpdate, nameUpdate, descriptionUpdate);
 
                             boolean checkExistCode = categoryUpdate.checkExistCode(categoryArrayList);
