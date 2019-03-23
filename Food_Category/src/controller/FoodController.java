@@ -106,6 +106,20 @@ public class FoodController implements ApplicationController {
 
     @Override
     public void find() {
-
+        if (!foodArrayList.isEmpty()){
+            System.out.println("Vui lòng nhập mã món ăn: ");
+            String code = sc.nextLine();
+            Food food = new Food();
+            Food foodResult = food.findFood(foodArrayList, code);
+            if (!CategoryController.categoryArrayList.isEmpty()){
+                System.out.println("Kết quả tìm kiếm mới mã món ăn là: " + code);
+                System.out.println(foodResult.toString(CategoryController.categoryArrayList, foodResult.getCategoryId()));
+            }else{
+                System.out.println("Hiện không có danh mục nào nên sẽ không thể tim kiếm món ăn!");
+                return;
+            }
+        }else {
+            System.out.println("Hiện không có món ăn nào!");
+        }
     }
 }

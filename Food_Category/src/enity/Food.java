@@ -61,6 +61,54 @@ public class Food {
         return content;
     }
 
+    public Food findFood(ArrayList<Food> foods, String categoryId){
+        Food food = null;
+
+        if (!foods.isEmpty()){
+            for (Food item : foods) {
+                if(categoryId.equals(item.getCategoryId())){
+                    food = new Food(item.getName(), item.getDescription(), item.getPrice(), item.getCategoryId(), item.getCode());
+                }
+            }
+        }
+
+        return food;
+    }
+
+
+    public String toString(ArrayList<Category> categories, String code) {
+        String categoryName = "";
+
+        if (!categories.isEmpty()){
+            for (Category category : categories){
+                if (code.equals(category.getCode())){
+                    categoryName = category.getName();
+                }
+            }
+        }else{
+            categoryName = "Không có danh mục";
+        }
+
+        String content = String.format(" %-45s|", " ID")
+                + String.format(" %-20s|", " Tên")
+                + String.format(" %-20s|", " Mã")
+                + String.format(" %-25s", " Danh mục")
+                + String.format(" %-30s", " Mô tả") + "\n";
+        content += "------------------------------------------------------------" +
+                "-----------------------------------------------------------------------------------------------------\n";
+
+        content += String.format(" %-44s| ", this.id)
+                + String.format(" %-19s| ", this.name)
+                + String.format(" %-19s| ", this.code)
+                + String.format(" %-24s| ", categoryName)
+                + String.format(" %-30s", this.description) + "\n";
+        System.out.println("------------------------------------------------------------" +
+                "-----------------------------------------------------------------------------------------------------\n");
+
+        return content;
+    }
+
+
 
     public String getId() {
         return id;
@@ -108,17 +156,5 @@ public class Food {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
-    }
-
-    @Override
-    public String toString() {
-        return "Food{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", categoryId='" + categoryId + '\'' +
-                ", code='" + code + '\'' +
-                '}';
     }
 }
