@@ -112,45 +112,21 @@ public class CategoryController implements ApplicationController {
                     sc.nextLine();
                     switch (choiceRemove) {
                         case 1:
-                            System.out.println("Mã danh mục mới(ấn S để bỏ qua không cập nhật mã danh mục): ");
-                            String codeUpdate = sc.nextLine();
-
                             System.out.println("Tên danh mục mới(ấn S để bỏ qua không cập nhật tên danh mục): ");
                             String nameUpdate = sc.nextLine();
 
                             System.out.println("Mô tả danh mục mới(ấn S để bỏ qua không cập nhật mô tả danh mục): ");
                             String descriptionUpdate = sc.nextLine();
 
-                            if (codeUpdate.equals("S") && nameUpdate.equals("S") && descriptionUpdate.equals("S")){
+                            if (nameUpdate.equals("S") && descriptionUpdate.equals("S")){
                                 System.out.println("Bịp à ko update cái gì thì vào đây làm gì?");
                                 return;
                             }
 
-                            if (codeUpdate.equals("S")) codeUpdate = category.getCode();
                             if (descriptionUpdate.equals("S")) descriptionUpdate = category.getDescription();
                             if (nameUpdate.equals("S")) nameUpdate = category.getName();
 
-                            Category categoryUpdate = new Category(codeUpdate, nameUpdate, descriptionUpdate);
-
-                            boolean checkExistCode = categoryUpdate.checkExistCode(categoryArrayList);
-
-                            if (checkExistCode){
-                                while (checkExistCode){
-                                    System.out.println("Mã danh mục đã tồn tại! Vui lòng nhập mã khác.\n");
-                                    System.out.println("Nhập mã danh mục mới hoặc ấn HUY để quay lại: ");
-                                    codeUpdate = sc.nextLine();
-
-                                    if (codeUpdate.equals("HUY")) return;
-
-                                    categoryUpdate.setCode(codeUpdate);
-                                    checkExistCode = categoryUpdate.checkExistCode(categoryArrayList);
-                                }
-                            }
-
-                            if (category.getCode().isEmpty()){
-                                System.out.println("Danh mục bạn muốn sửa đã không còn tồn tại, có thể do ai đó đã xóa hoặc sửa trước đó.");
-                                return;
-                            }
+                            Category categoryUpdate = new Category(category.getCode(), nameUpdate, descriptionUpdate);
 
                             for (Category item : categoryArrayList) {
                                 if (category.getCode().equals(item.getCode())){
