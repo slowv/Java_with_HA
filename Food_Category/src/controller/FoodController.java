@@ -101,7 +101,42 @@ public class FoodController implements ApplicationController {
 
     @Override
     public void destroy() {
-
+        if (!foodArrayList.isEmpty()){
+            System.out.println("Vui lòng nhập mã món ăn: ");
+            String code = sc.nextLine();
+            Food food = new Food();
+            Food foodResult = food.findFood(foodArrayList, code);
+            if (!CategoryController.categoryArrayList.isEmpty()){
+                System.out.println(foodResult.toString(CategoryController.categoryArrayList, foodResult.getCategoryId()));
+                while (true){
+                    System.out.println("Bạn có chắc muốn xóa món ăn: " + foodResult.getName());
+                    System.out.println("1. Đồng ý \t \t \t \t 2. Quay lại");
+                    int choice = sc.nextInt();
+                    switch (choice){
+                        case 1:
+                            for (int i = 0; i < foodArrayList.size(); i++) {
+                                if (foodResult.getCode().equals(foodArrayList.get(i).getCode())){
+                                    foodArrayList.remove(i);
+                                }
+                            }
+                            System.out.println("Xóa món ăn `" + foodResult.getName() +"` thành công!");
+                            System.out.println("<=== Ấn enter để ra màn hình chính.");
+                            sc.nextLine();
+                            return;
+                        case 2:
+                            return;
+                        default:
+                            System.out.println("Lựa chọn sai, vui lòng chọn 1 hoặc 2.");
+                            break;
+                    }
+                }
+            }else{
+                System.out.println("Hiện không có danh mục nào nên sẽ không thể tim kiếm món ăn!");
+                return;
+            }
+        }else{
+            System.out.println("Hiện tại không có món ăn nào!");
+        }
     }
 
     @Override
