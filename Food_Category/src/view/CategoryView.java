@@ -10,11 +10,11 @@ public class CategoryView implements GenerateMenu {
         boolean isLoop = false;
         Scanner sc = new Scanner(System.in);
         while (!isLoop) {
-            System.out.println("----------------------- Quản lý danh mục -------------------\n");
+            System.out.println("---------------------- Quản lý danh mục -------------------\n");
             System.out.println("1. Thêm danh mục \t \t \t \t \t 2. Danh sách danh mục");
             System.out.println("3. Sửa danh mục \t \t \t \t \t 4. Xóa danh mục");
             System.out.println("5. Tìm kiếm \t \t \t \t \t \t 6. Quay lại");
-            System.out.println("---------------------------------------------------------------\n");
+            System.out.println("------------------------------*-------------------------------\n");
 
             System.out.println("Nhập lựa chọn của bạn: ");
             int choice = sc.nextInt();

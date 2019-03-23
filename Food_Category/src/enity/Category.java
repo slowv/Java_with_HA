@@ -12,25 +12,43 @@ public class Category {
     public Category() {
     }
 
-    public Category(String code,String name, String description) {
+    public Category(String code, String name, String description) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
         this.code = code;
     }
 
-    public  Category findCategory(ArrayList<Category> categories, String code){
+    public Category findCategory(ArrayList<Category> categories, String code) {
         Category category = new Category();
-        if (!categories.isEmpty()){
+        if (!categories.isEmpty()) {
             for (Category category1 : categories) {
                 if (code.equals(category1.code)) {
-                    category =  category1;
+                    category = category1;
                     break;
                 }
                 category = null;
             }
         }
         return category;
+    }
+
+
+    public String displayOneCategory() {
+        String content = "";
+        content += "----------------------------------------------------------------------------------------------------------------------------------------------------------------- \n";
+        content += String.format(" %-45s|", " ID") + String.format(" %-20s|", " Tên") + String.format(" %-20s|", " Mã") + String.format(" %-30s", " Mô tả") + "\n";
+        content += "----------------------------------------------------------------------------------------------------------------------------------------------------------------- \n";
+        content += String.format(" %-45s| ", this.id)+ String.format(" %-19s| ", this.name)+ String.format(" %-19s| ", this.code)+ String.format(" %-30s", this.description) + "\n";
+        content += "-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+        return content;
+    }
+
+    public boolean checkExistCode(ArrayList<Category> categories){
+        for (Category item : categories){
+            if (this.code.equals(item.getCode())) return true;
+        }
+        return false;
     }
 
 
@@ -65,7 +83,6 @@ public class Category {
     public void setDescription(String description) {
         this.description = description;
     }
-
 
 
 }

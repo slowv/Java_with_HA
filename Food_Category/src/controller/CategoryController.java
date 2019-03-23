@@ -25,6 +25,21 @@ public class CategoryController implements ApplicationController {
             String description = sc.nextLine();
 
             Category category = new Category(code, name, description);
+            boolean checkExistCode = category.checkExistCode(categoryArrayList);
+
+            if(checkExistCode){
+                while (checkExistCode){
+                    System.out.println("Mã danh mục đã tồn tại! Vui lòng nhập mã khác.\n");
+                    System.out.println("Nhập mã danh mục mới hoặc ấn HUY để quay lại: ");
+                    code = sc.nextLine();
+
+                    if (code.equals("HUY")) return;
+
+                    category.setCode(code);
+                    checkExistCode = category.checkExistCode(categoryArrayList);
+                }
+            }
+
             categoryArrayList.add(category);
 
             System.out.println("Thêm danh mục thành công!\n");
@@ -73,12 +88,125 @@ public class CategoryController implements ApplicationController {
 
     @Override
     public void update() {
+        Category category = new Category();
+        if (!categoryArrayList.isEmpty()) {
+            System.out.println("Nhập mã danh mục:");
+            String code = sc.nextLine();
+            category = category.findCategory(categoryArrayList, code);
+            if (category != null) {
+                while (true){
+                    System.out.println(category.displayOneCategory());
+                    System.out.printf("Bạn có chắc muốn sửa danh mục: %s \n", category.getName());
+                    System.out.println("1. Đồng ý \t \t \t \t 2. Quay lại");
+                    int choiceRemove = sc.nextInt();
+                    sc.nextLine();
+                    switch (choiceRemove) {
+                        case 1:
+                            System.out.println("Mã danh mục mới(ấn S để bỏ qua không cập nhật mã danh mục): ");
+                            String codeUpdate = sc.nextLine();
+                            if (codeUpdate.equals("S")) codeUpdate = category.getCode();
 
+                            System.out.println("Tên danh mục mới(ấn S để bỏ qua không cập nhật tên danh mục): ");
+                            String nameUpdate = sc.nextLine();
+                            if (nameUpdate.equals("S")) nameUpdate = category.getName();
+
+                            System.out.println("Mô tả danh mục mới(ấn S để bỏ qua không cập nhật mô tả danh mục): ");
+                            String descriptionUpdate = sc.nextLine();
+                            if (descriptionUpdate.equals("S")) descriptionUpdate = category.getDescription();
+
+                            if (codeUpdate.equals("S") && nameUpdate.equals("S") && descriptionUpdate.equals("S")){
+                                System.out.println("Bịp à ko update cái gì thì vào đây làm gì?");
+                                return;
+                            }
+                            Category categoryUpdate = new Category(codeUpdate, nameUpdate, descriptionUpdate);
+
+                            boolean checkExistCode = categoryUpdate.checkExistCode(categoryArrayList);
+
+                            if (checkExistCode){
+                                while (checkExistCode){
+                                    System.out.println("Mã danh mục đã tồn tại! Vui lòng nhập mã khác.\n");
+                                    System.out.println("Nhập mã danh mục mới hoặc ấn HUY để quay lại: ");
+                                    codeUpdate = sc.nextLine();
+
+                                    if (codeUpdate.equals("HUY")) return;
+
+                                    categoryUpdate.setCode(codeUpdate);
+                                    checkExistCode = categoryUpdate.checkExistCode(categoryArrayList);
+                                }
+                            }
+
+                            if (category.getCode().isEmpty()){
+                                System.out.println("Danh mục bạn muốn sửa đã không còn tồn tại, có thể do ai đó đã xóa hoặc sửa trước đó.");
+                                return;
+                            }
+
+                            for (Category item : categoryArrayList) {
+                                if (category.getCode().equals(item.getCode())){
+                                    item.setCode(categoryUpdate.getCode());
+                                    item.setName(categoryUpdate.getName());
+                                    item.setDescription(categoryUpdate.getDescription());
+                                }
+                            }
+
+                            System.out.println("Sửa thành công!");
+                            return;
+                        case 2:
+                            return;
+                        default:
+                            System.out.println("Vui lòng chọn 1 hoặc 2.");
+                            break;
+                    }
+                }
+            } else {
+                System.out.printf("Không tìm thấy danh mục nào với mã là: %s \n", code);
+            }
+
+        } else {
+            System.out.println("Hiện tại bạn chưa có danh mục nào!\n");
+            return;
+        }
     }
 
     @Override
     public void destroy() {
+        Category category = new Category();
+        if (!categoryArrayList.isEmpty()) {
+            System.out.println("Nhập mã danh mục:");
+            String code = sc.nextLine();
+            category = category.findCategory(categoryArrayList, code);
+            if (category != null) {
+                while (true){
+                    System.out.println(category.displayOneCategory());
+                    System.out.printf("Bạn có chắc muốn xóa danh mục: %s \n", category.getName());
+                    System.out.println("1. Đồng ý \t \t \t \t 2. Quay lại");
+                    int choiceRemove = sc.nextInt();
 
+                    switch (choiceRemove) {
+                        case 1:
+                            for (int i = 0; i < categoryArrayList.size(); i++) {
+                                if (!category.getCode().isEmpty()){
+                                    if (category.getCode().equals(categoryArrayList.get(i).getCode())){
+                                        categoryArrayList.remove(i);
+                                    }
+                                }
+                            }
+                            System.out.println("Xóa thành công!");
+                            return;
+                        case 2:
+                            return;
+                        default:
+                            System.out.println("Vui lòng chọn 1 hoặc 2.");
+                            break;
+                    }
+                }
+            } else {
+                System.out.printf("Không tìm thấy danh mục nào với mã là: %s \n", code);
+            }
+
+        } else {
+            System.out.println("Hiện tại bạn chưa có danh mục nào!\n");
+            return;
+        }
     }
 
     @Override
@@ -89,23 +217,10 @@ public class CategoryController implements ApplicationController {
             String code = sc.nextLine();
             category = category.findCategory(categoryArrayList, code);
             if (category != null) {
-                System.out.println("------------------------------------------------------------" +
-                        "-----------------------------------------------------------------------------------------------------");
-                System.out.println( String.format(" %-45s|", " ID")
-                        + String.format(" %-20s|", " Tên")
-                        + String.format(" %-20s|", " Mã")
-                        + String.format(" %-30s", " Mô tả"));
-                System.out.println("------------------------------------------------------------" +
-                        "-----------------------------------------------------------------------------------------------------");
-                System.out.println( String.format(" %-45s| ", category.getId())
-                        + String.format(" %-19s| ", category.getName())
-                        + String.format(" %-19s| ", category.getCode())
-                        + String.format(" %-30s", category.getDescription()));
-                System.out.println("------------------------------------------------------------" +
-                        "-----------------------------------------------------------------------------------------------------");
+                System.out.println(category.displayOneCategory());
                 System.out.println("<======= Ấn enter để quay lại.");
                 sc.nextLine();
-            }else {
+            } else {
                 System.out.printf("Không tìm thấy danh mục nào với mã là: %s \n", code);
             }
 
