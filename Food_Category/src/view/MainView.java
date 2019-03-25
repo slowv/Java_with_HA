@@ -3,6 +3,7 @@ package view;
 import controller.ApplicationController;
 import controller.CategoryController;
 import controller.FoodController;
+import utility.Number;
 
 import java.util.Scanner;
 
@@ -11,15 +12,26 @@ public class MainView{
         Scanner sc = new Scanner(System.in);
         ApplicationController controller = null;
         GenerateMenu generateMenu = null;
+        Number number = new Number();
+        boolean isNumberResult;
         while (true){
             System.out.println("----------------- Quản lý nhà hàng -----------------\n");
             System.out.println("1. Món ăn \t \t \t \t \t 2. Danh mục món ăn");
             System.out.println("3. Thoát chương trình\n");
             System.out.println("-------------------------*--------------------------\n");
             System.out.println("Nhập lựa chọn: ");
-            int choice = sc.nextInt();
+            String choice = sc.nextLine();
 
-            switch (choice){
+            isNumberResult = number.checkIsNumber(choice);
+
+            while (!isNumberResult){
+                System.out.println("Bạn đã nhập sai định dạng số! vui lòng nhập lại!\n");
+                System.out.println("Nhập lại lựa chọn của bạn(1|2|3): ");
+                choice = sc.nextLine();
+                isNumberResult = number.checkIsNumber(choice);
+            }
+
+            switch (Integer.parseInt(choice)){
                 case 1:
                     controller =  new FoodController();
                     generateMenu = new FoodView();
@@ -33,7 +45,7 @@ public class MainView{
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("Lựa chọn sai!, vui lòng chọn 1 hoặc 2.");
+                    System.out.println("Lựa chọn sai!, vui lòng chọn (1|2|3.");
                     break;
             }
 

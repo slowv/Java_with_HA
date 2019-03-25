@@ -1,9 +1,8 @@
+package mainThread;
+
 import view.MainView;
 
-import java.util.UUID;
-
-public class Main {
-
+public class MainThread {
     public static void main(String[] args) {
         MainView view = new MainView();
         view.menu();

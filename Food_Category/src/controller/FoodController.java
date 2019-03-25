@@ -2,20 +2,30 @@ package controller;
 
 import enity.Category;
 import enity.Food;
+import utility.AlertSuccessString;
+import utility.Confirm;
+import utility.Error;
+import utility.Number;
 import view.MainView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
+
+import static controller.CategoryController.categoryArrayList;
 
 public class FoodController implements ApplicationController {
 
-    public static ArrayList<Food> foodArrayList = new ArrayList<>();
+    private String entityName = "món ăn";
+    static ArrayList<Food> foodArrayList = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
+    private AlertSuccessString alertSuccessString = new AlertSuccessString();
+    private Error error = new Error();
+    private Confirm confirm = new Confirm();
+    private Number number = new Number();
 
     @Override
     public void create() {
-        if (!CategoryController.categoryArrayList.isEmpty()){
+        if (!categoryArrayList.isEmpty()){
             boolean isLoop = false;
             int count = 0;
             Category category = new Category();
@@ -31,7 +41,7 @@ public class FoodController implements ApplicationController {
                 System.out.println("Nhập giá món ăn: ");
                 double price = sc.nextDouble();
                 sc.nextLine();
-                String content = category.tempoListCategory(CategoryController.categoryArrayList);
+                String content = category.tempoListCategory(categoryArrayList);
                 if (content.isEmpty()){
                     content = "Hiện không có danh mục nào!";
                 }
@@ -40,7 +50,7 @@ public class FoodController implements ApplicationController {
                 String codeCategory = sc.nextLine();
                 category.setCode(codeCategory);
 
-                boolean checkExistCode = category.checkExistCode(CategoryController.categoryArrayList);
+                boolean checkExistCode = category.checkExistCode(categoryArrayList);
                 codeCategory = getString(codeCategory, category, checkExistCode);
                 Food food = new Food(name, description, price, category.getCode(), code);
 //                System.out.println(food);
@@ -48,7 +58,7 @@ public class FoodController implements ApplicationController {
 //                System.out.println(Arrays.toString(foodArrayList.toArray()));
 //                return;
 //
-                System.out.println("Thêm món ăn `" + name + "` thành công!");
+                alertSuccessString.alertSuccess("Thêm mới", entityName);
                 System.out.println("Ấn enter để tiếp tục. Nhập HUY để trở ra màn hình chính.");
                 String choice = sc.nextLine();
 
@@ -63,15 +73,14 @@ public class FoodController implements ApplicationController {
         }else{
             System.out.println("Vui lòng tạo danh mục món ăn trước khi tạo món ăn!");
             new MainView().menu();
-            return;
         }
     }
 
     @Override
     public void readList() {
         String content ="";
-        if (!foodArrayList.isEmpty() && !CategoryController.categoryArrayList.isEmpty()){
-            content = new Food().printList(foodArrayList, CategoryController.categoryArrayList);
+        if (!foodArrayList.isEmpty() && !categoryArrayList.isEmpty()){
+            content = new Food().printList(foodArrayList, categoryArrayList);
         }
 
         if (content.isEmpty()){
@@ -84,19 +93,29 @@ public class FoodController implements ApplicationController {
 
     @Override
     public void update() {
+        boolean isNumberResult;
         if (!foodArrayList.isEmpty()){
             System.out.println("Vui lòng nhập mã món ăn: ");
             String code = sc.nextLine();
             Food foodResult = new Food().findFood(foodArrayList, code);
-            if (!CategoryController.categoryArrayList.isEmpty()){
+            if (!categoryArrayList.isEmpty()){
                 while (true){
-                    System.out.println(foodResult.toString(CategoryController.categoryArrayList, foodResult.getCategoryId()));
-                    System.out.println("Bạn có chắc muốn sửa món ăn: " + foodResult.getName());
-                    System.out.println("1. Đồng ý \t \t \t \t 2. Quay lại\n");
-                    System.out.println("Nhập lựa chọn của bạn");
-                    int choice = sc.nextInt();
-                    sc.nextLine();
-                    switch (choice){
+                    String choice;
+
+                    System.out.println(foodResult.toString(categoryArrayList, foodResult.getCategoryId()));
+                    confirm.confirmString(foodResult.getName(), "sửa", entityName);
+                    choice = sc.nextLine();
+                    isNumberResult = number.checkIsNumber(choice);
+
+                    while (!isNumberResult) {
+                        System.out.println(foodResult.toString(categoryArrayList, foodResult.getCategoryId()));
+                        error.alertErrorNumberFormat("(1|2)");
+                        confirm.confirmString(foodResult.getName(), "sửa", entityName);
+                        choice = sc.nextLine();
+                        isNumberResult = number.checkIsNumber(choice);
+                    }
+
+                    switch (Integer.parseInt(choice)){
                         case 1:
                             System.out.println("Tên món ăn mới(ấn S để bỏ qua không cập nhật tên món ăn): ");
                             String nameUpdate = sc.nextLine();
@@ -105,13 +124,13 @@ public class FoodController implements ApplicationController {
                             System.out.println("Giá món ăn mới(ấn 0 để bỏ qua không cập nhật giá món ăn): ");
                             double priceUpdate = sc.nextDouble();
                             sc.nextLine();
-                            String content = new Category().tempoListCategory(CategoryController.categoryArrayList);
+                            String content = new Category().tempoListCategory(categoryArrayList);
                             System.out.println(content);
                             System.out.println("Mã danh mục mới(ấn S để bỏ qua không cập nhật mã danh mục món ăn): ");
                             String categoryIdUpdate = sc.nextLine();
 
                             if (nameUpdate.equals("S") && descriptionUpdate.equals("S") && priceUpdate == 0 && categoryIdUpdate.equals("S")){
-                                System.out.println("Bịp à ko update cái gì thì vào đây làm gì?");
+                                System.out.println("Bịp à ko update cái gì thì vào đây làm gì?\n");
                                 return;
                             }
 
@@ -122,7 +141,7 @@ public class FoodController implements ApplicationController {
 
                             Category category = new Category();
                             category.setCode(categoryIdUpdate);
-                            boolean checkExistCode = category.checkExistCode(CategoryController.categoryArrayList);
+                            boolean checkExistCode = category.checkExistCode(categoryArrayList);
                             categoryIdUpdate = getString(categoryIdUpdate, category, checkExistCode);
 
                             Food food = new Food(nameUpdate, descriptionUpdate, priceUpdate, categoryIdUpdate, foodResult.getCode());
@@ -135,35 +154,30 @@ public class FoodController implements ApplicationController {
                                     index.setCode(food.getCode());
                                 }
                             }
-                            System.out.println("Sửa thành công!");
+                            alertSuccessString.alertSuccess("Sửa", entityName);
                             return;
                         case 2:
                             return;
                         default:
-                            System.out.println("Lựa chọn sai, vui lòng chọn 1 hoặc 2.");
+                            error.alertErrorChoice("(1|2)");
                             break;
                     }
                 }
-            }else{
-                System.out.println("Hiện không có danh mục nào nên sẽ không thể tim kiếm món ăn!");
-                return;
-            }
-        }else{
-            System.out.println("Hiện tại không có món ăn nào!");
-        }
+            }else System.out.println("Hiện không có danh mục nào nên sẽ không thể tim kiếm món ăn!");
+        }else error.alertErrorIsEmpty(entityName);
     }
 
     private String getString(String categoryIdUpdate, Category category, boolean checkExistCode) {
         String content;
         if (!checkExistCode){
             while (!checkExistCode){
-                content = category.tempoListCategory(CategoryController.categoryArrayList);
+                content = category.tempoListCategory(categoryArrayList);
                 System.out.println(content);
                 System.out.println("Mã danh mục không tồn tại, vui lòng nhập lại: ");
                 System.out.println("Nhập mã danh mục");
                 categoryIdUpdate = sc.nextLine();
                 category.setCode(categoryIdUpdate);
-                checkExistCode = category.checkExistCode(CategoryController.categoryArrayList);
+                checkExistCode = category.checkExistCode(categoryArrayList);
             }
         }
         return categoryIdUpdate;
@@ -171,41 +185,47 @@ public class FoodController implements ApplicationController {
 
     @Override
     public void destroy() {
+        boolean isNumberResult;
         if (!foodArrayList.isEmpty()){
             System.out.println("Vui lòng nhập mã món ăn: ");
             String code = sc.nextLine();
             Food foodResult = new Food().findFood(foodArrayList, code);
-            if (!CategoryController.categoryArrayList.isEmpty()){
-                System.out.println(foodResult.toString(CategoryController.categoryArrayList, foodResult.getCategoryId()));
+            if (!categoryArrayList.isEmpty()){
                 while (true){
-                    System.out.println("Bạn có chắc muốn xóa món ăn: " + foodResult.getName());
-                    System.out.println("1. Đồng ý \t \t \t \t 2. Quay lại");
-                    int choice = sc.nextInt();
-                    switch (choice){
+                    String choice;
+                    System.out.println(foodResult.toString(categoryArrayList, foodResult.getCategoryId()));
+                    confirm.confirmString(foodResult.getName(),"xóa", entityName);
+                    choice = sc.nextLine();
+                    isNumberResult = number.checkIsNumber(choice);
+
+                    while (!isNumberResult) {
+                        System.out.println(foodResult.toString(categoryArrayList, foodResult.getCategoryId()));
+                        error.alertErrorNumberFormat("(1|2)");
+                        confirm.confirmString(foodResult.getName(), "xóa", entityName);
+                        choice = sc.nextLine();
+                        isNumberResult = number.checkIsNumber(choice);
+                    }
+
+                    switch (Integer.parseInt(choice)){
                         case 1:
                             for (int i = 0; i < foodArrayList.size(); i++) {
                                 if (foodResult.getCode().equals(foodArrayList.get(i).getCode())){
                                     foodArrayList.remove(i);
                                 }
                             }
-                            System.out.println("Xóa món ăn `" + foodResult.getName() +"` thành công!");
+                            alertSuccessString.alertSuccess("Thêm mới", entityName);
                             System.out.println("<=== Ấn enter để ra màn hình chính.");
                             sc.nextLine();
                             return;
                         case 2:
                             return;
                         default:
-                            System.out.println("Lựa chọn sai, vui lòng chọn 1 hoặc 2.");
+                            error.alertErrorChoice("(1|2)");
                             break;
                     }
                 }
-            }else{
-                System.out.println("Hiện không có danh mục nào nên sẽ không thể tim kiếm món ăn!");
-                return;
-            }
-        }else{
-            System.out.println("Hiện tại không có món ăn nào!");
-        }
+            }else System.out.println("Hiện không có danh mục nào nên sẽ không có món ăn!");
+        }else error.alertErrorIsEmpty(entityName);
     }
 
     @Override
@@ -215,15 +235,10 @@ public class FoodController implements ApplicationController {
             String code = sc.nextLine();
             Food food = new Food();
             Food foodResult = food.findFood(foodArrayList, code);
-            if (!CategoryController.categoryArrayList.isEmpty()){
+            if (!categoryArrayList.isEmpty()){
                 System.out.println("Kết quả tìm kiếm mới mã món ăn là: " + code);
-                System.out.println(foodResult.toString(CategoryController.categoryArrayList, foodResult.getCategoryId()));
-            }else{
-                System.out.println("Hiện không có danh mục nào nên sẽ không thể tim kiếm món ăn!");
-                return;
-            }
-        }else {
-            System.out.println("Hiện không có món ăn nào!");
-        }
+                System.out.println(foodResult.toString(categoryArrayList, foodResult.getCategoryId()));
+            }else System.out.println("Hiện không có danh mục nào nên sẽ không có món ăn!");
+        }else error.alertErrorIsEmpty(entityName);
     }
 }
