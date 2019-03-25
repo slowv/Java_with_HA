@@ -1,8 +1,8 @@
 package utility;
 
 public class Error {
-    public void alertErrorNumberFormat(String totalChoice){
-        System.out.printf("Nhập sai định dạng số, vui lòng nhập lại %s.\n", totalChoice);
+    public void alertErrorNumberFormat(String choice){
+        System.out.printf("Nhập sai định dạng số, vui lòng nhập lại %s.\n", choice);
     }
 
     public void alertErrorChoice(String choice){
