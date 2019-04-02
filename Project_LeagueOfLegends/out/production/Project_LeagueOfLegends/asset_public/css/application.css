@@ -1,0 +1,113 @@
+/*@font-face {*/
+    /*-fx-font-family: 'Montserrat', sans-serif;*/
+    /*src: "https://fonts.googleapis.com/css?family=Montserrat&subset=vietnamese";*/
+/*}*/
+
+/**{*/
+    /*-fx-font-family: 'Montserrat', sans-serif;*/
+/*}*/
+
+#font-mon{
+    -fx-font-family: 'Montserrat', sans-serif;
+}
+
+.font-mon{
+    -fx-font-family: 'Montserrat', sans-serif;
+}
+
+.bg-none{
+    -fx-background-color: #000306;
+    -fx-text-fill: #959595;
+    -fx-border-color: #785A28;
+}
+
+.bg-none:focused, .bg-none:hover{
+    -fx-background-color: #0F171F;
+    -fx-border-color: #a38335;
+}
+
+.slv-font-size-15{
+    -fx-font-size: 15px;
+}
+
+.check-box .box {
+    -fx-border-color: #535353;
+    -fx-border-radius:1px;
+    -fx-border-width: 1px;
+    -fx-background-color: transparent;
+}
+
+.check-box.boxes .box{
+    -fx-border-color: #c6c6c6 !important;
+    -fx-pref-height: 15px;
+    -fx-pref-width: 15px;
+}
+
+.check-box.boxes:selected .mark {
+
+    -fx-background-color: #a57b34 !important;
+    -fx-text-fill: #a57b34 !important;
+}
+
+.slv-input-regster:focused{
+    -fx-background-color: #0F171F;
+}
+.slv-input-regster{
+
+}
+
+.check-box:selected .box {
+    -fx-background-color: #transparent !important;
+    -fx-border-color: #a57b34;
+}
+
+.btn-login{
+    -fx-padding: 7px 0;
+    -fx-background-color: #01131d;
+    -fx-border-radius: 0px;
+    -fx-border-width: 3px;
+    /*-fx-border-style: ridge;*/
+    -fx-font-weight: bold;
+    -fx-text-fill: #d8d8d8;
+    -fx-cursor: hand;
+    /*-fx-font-family: "Segoe UI";*/
+    -fx-font-family: 'Montserrat', sans-serif;
+    -fx-font-weight: bold !important;
+    -fx-border-color: #52C0DD;
+    -fx-effect: dropshadow(three-pass-box, #52C0DD, 10, 0, 0, 0);
+}
+
+.btn-login:hover{
+    -fx-background-color: #012c41;
+}
+
+#btnConfirm{
+    -fx-border-color: #8a7024;
+    -fx-border-width: 2px;-fx-padding: 5px 10px;
+    -fx-text-fill: #f1f1f1;
+    -fx-min-width: 100px;
+    -fx-cursor: hand;
+}
+
+#btnConfirm:hover{
+    -fx-background-color: #012340;
+    -fx-border-color: #bf9a34;
+}
+
+#dialogConfirmExit{
+    -fx-background-color: #010A13;
+    -fx-border-color: #8a7024;
+    -fx-border-width: 3px;
+    -fx-effect: dropshadow(three-pass-box, #bababa, 20, 0, 0, 0);
+}
+
+/*.btnYes{*/
+    /*-fx-border-color: #fff;*/
+    /*-fx-border-width: 1px;*/
+    /*-fx-border-style: solid;*/
+/*}*/
+
+.msg-error{
+    -fx-font-style: italic;
+    -fx-text-fill: #ff0000;
+}

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="stackpane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+   <children>
+      <AnchorPane fx:id="anchorPane" prefHeight="720.0" prefWidth="1280.0">
+          <MediaView fx:id="mediaView" fitHeight="720.0" fitWidth="1280.0" />
+         <HBox alignment="CENTER_RIGHT" layoutX="1187.0" opacity="0.73" prefHeight="30.0">
+            <JFXButton fx:id="btnSetting" alignment="TOP_CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" style="-fx-background-color: #1a0dab00;" text=" ">
+               <graphic>
+                  <MaterialDesignIconView fx:id="iconSetting" fill="#eeeeee" glyphName="SETTINGS" opacity="0.87" size="15">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MaterialDesignIconView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnMinimize" alignment="TOP_CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" onMouseClicked="#minimizeProgram" style="-fx-background-color: #1a0dab00;" text=" ">
+               <graphic>
+                  <MaterialDesignIconView fx:id="iconMinimize" fill="#eeeeee" glyphName="MINUS" glyphStyle="bold" opacity="0.87" size="15">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MaterialDesignIconView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="closeBtn" alignment="TOP_CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" onAction="#closeProgram" onMouseMoved="#onHover" style="-fx-background-color: #1a0dab00;" text=" " textFill="WHITE">
+               <graphic>
+                  <MaterialDesignIconView fx:id="iconClose" fill="#eeeeee" glyphName="CLOSE" opacity="0.87" size="15">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MaterialDesignIconView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </HBox>
+         <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="230.0" style="-fx-background-color: #010A13;">
+            <padding>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="20.0" />
+            </padding>
+            <ImageView disable="true" fitHeight="150.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true">
+               <Image url="@../asset_public/image/logo.png" />
+               <VBox.margin>
+                  <Insets top="25.0" />
+               </VBox.margin>
+            </ImageView>
+            <VBox prefHeight="369.0" prefWidth="240.0">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <children>
+                  <Text fill="#b5b5b5" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Tài khoản">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <TextField fx:id="txtPassword" focusTraversable="false" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
+                     <padding>
+                        <Insets bottom="8.0" left="5.0" top="8.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TextField>
+                  <Text fill="#b5b5b5" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Mật khẩu">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="11.0" />
+                     </VBox.margin>
+                  </Text>
+                  <PasswordField focusTraversable="false" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
+                     <padding>
+                        <Insets bottom="8.0" left="5.0" top="8.0" />
+                     </padding>
+                  </PasswordField>
+                  <HBox prefHeight="23.0" prefWidth="210.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <JFXCheckBox checkedColor="#062543" focusTraversable="false" stylesheets="@../asset_public/css/application.css" text="Nhớ tài khoản">
+                           <HBox.margin>
+                              <Insets top="2.0" />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXCheckBox>
+                     </children>
+                  </HBox>
+                  <VBox alignment="BOTTOM_CENTER" prefHeight="172.0" prefWidth="210.0">
+                     <children>
+                        <JFXButton buttonType="RAISED" prefHeight="25.0" prefWidth="221.0" style="-fx-border-radius: 0;" styleClass="btn-login" stylesheets="@../asset_public/css/application.css" text="ĐĂNG NHẬP" textFill="#757575">
+                           <ripplerFill>
+                              <LinearGradient endX="0.5523809523809524" endY="1.0" startX="0.5285714285714286" startY="0.4">
+                                 <stops>
+                                    <Stop color="#051a28" />
+                                    <Stop color="#10474d" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </ripplerFill>
+                           <font>
+                              <Font name="Times New Roman Bold" size="12.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="145.0" prefWidth="240.0">
+               <children>
+                  <Hyperlink text="Bạn quên tài khoản? ">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Hyperlink>
+                  <Hyperlink text="Bạn quên mật khẩu?">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Hyperlink>
+                  <Hyperlink fx:id="hyperLinkCreateAccount" onMouseClicked="#toPageRegister" text="Tạo mới tài khoản">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Hyperlink>
+               </children>
+               <padding>
+                  <Insets left="8.0" top="10.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="39.0" prefWidth="240.0">
+               <children>
+                  <Line endX="140.0" startX="-99.0" stroke="#656565" strokeWidth="0.1">
+                     <VBox.margin>
+                        <Insets top="-6.0" />
+                     </VBox.margin>
+                  </Line>
+                  <Text fill="#727272" strokeType="OUTSIDE" strokeWidth="0.0" text="v1.1.00001" textAlignment="CENTER">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </Text>
+               </children>
+            </VBox>
+         </VBox>
+         <HBox alignment="CENTER" layoutX="951.0" layoutY="620.0" prefHeight="100.0" prefWidth="329.0">
+            <children>
+               <ImageView disable="true" fitHeight="75.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../asset_public/image/riotLogo.png" />
+                  </image>
+                  <HBox.margin>
+                     <Insets />
+                  </HBox.margin>
+               </ImageView>
+               <Line endX="100.0" startX="99.99992370605469" startY="-64.82466125488281" stroke="#7c582c" />
+               <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="280.0">
+                  <children>
+                     <JFXCheckBox fx:id="checkboxAnimation" checkedColor="#109c5600" onAction="#checkboxes" stylesheets="@../asset_public/css/application.css" text="Tắt hoạt ảnh đăng nhập" textFill="#a4a4a4">
+                        <VBox.margin>
+                           <Insets left="15.0" top="10.0" />
+                        </VBox.margin>
+                        <padding>
+                           <Insets bottom="10.0" />
+                        </padding>
+                        <styleClass>
+                           <String fx:value="check-box" />
+                           <String fx:value="boxes" />
+                        </styleClass>
+                        <font>
+                           <Font name="System Bold" size="12.0" />
+                        </font>
+                     </JFXCheckBox>
+                     <JFXCheckBox fx:id="checkboxMusic" checkedColor="#109c5600" onAction="#checkboxes" stylesheets="@../asset_public/css/application.css" text="Tắt nhạc đăng nhập" textFill="#a4a4a4">
+                        <VBox.margin>
+                           <Insets left="15.0" />
+                        </VBox.margin>
+                        <padding>
+                           <Insets bottom="5.0" top="5.0" />
+                        </padding>
+                        <styleClass>
+                           <String fx:value="boxes" />
+                           <String fx:value="check-box" />
+                        </styleClass>
+                        <font>
+                           <Font name="System Bold" size="12.0" />
+                        </font>
+                     </JFXCheckBox>
+                  </children>
+               </VBox>
+            </children>
+         </HBox>
+      </AnchorPane>
+   </children>
+</StackPane>
