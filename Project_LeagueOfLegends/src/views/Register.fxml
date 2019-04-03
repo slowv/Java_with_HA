@@ -15,233 +15,243 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterController">
+<AnchorPane fx:id="anchorPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-image: #fff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterController">
    <children>
-      <AnchorPane fx:id="anchorPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-image: #fff;">
+      <MediaView fx:id="mediaView" fitHeight="720.0" fitWidth="1280.0" />
+      <HBox alignment="CENTER_RIGHT" layoutX="1182.0" opacity="0.73" prefHeight="30.0">
          <children>
-            <MediaView fx:id="mediaView" fitHeight="720.0" fitWidth="1280.0" />
-            <HBox alignment="CENTER_RIGHT" layoutX="1182.0" opacity="0.73" prefHeight="30.0">
-               <children>
-                  <JFXButton fx:id="btnSetting" alignment="TOP_CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" style="-fx-background-color: #1a0dab00;" text=" ">
-                     <graphic>
-                        <MaterialDesignIconView fx:id="iconSetting" fill="#eeeeee" glyphName="SETTINGS" opacity="0.87" size="15">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </MaterialDesignIconView>
-                     </graphic>
+            <JFXButton fx:id="btnSetting" alignment="TOP_CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" style="-fx-background-color: #1a0dab00;" text=" ">
+               <graphic>
+                  <MaterialDesignIconView fx:id="iconSetting" fill="#eeeeee" glyphName="SETTINGS" opacity="0.87" size="15">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                  </JFXButton>
-                  <JFXButton fx:id="btnMinimize" alignment="TOP_CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" onMouseClicked="#minimizeProgram" style="-fx-background-color: #1a0dab00;" text=" ">
-                     <graphic>
-                        <MaterialDesignIconView fx:id="iconMinimize" fill="#eeeeee" glyphName="MINUS" glyphStyle="bold" opacity="0.87" size="15">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </MaterialDesignIconView>
-                     </graphic>
+                  </MaterialDesignIconView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnMinimize" alignment="TOP_CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" onMouseClicked="#minimizeProgram" style="-fx-background-color: #1a0dab00;" text=" ">
+               <graphic>
+                  <MaterialDesignIconView fx:id="iconMinimize" fill="#eeeeee" glyphName="MINUS" glyphStyle="bold" opacity="0.87" size="15">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                  </JFXButton>
-                  <JFXButton fx:id="closeBtn" alignment="TOP_CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" onAction="#closeProgram" style="-fx-background-color: #1a0dab00;" text=" " textFill="WHITE">
-                     <graphic>
-                        <MaterialDesignIconView fx:id="iconClose" fill="#eeeeee" glyphName="CLOSE" opacity="0.87" size="15">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </MaterialDesignIconView>
-                     </graphic>
+                  </MaterialDesignIconView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="closeBtn" alignment="TOP_CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" onAction="#closeProgram" style="-fx-background-color: #1a0dab00;" text=" " textFill="WHITE">
+               <graphic>
+                  <MaterialDesignIconView fx:id="iconClose" fill="#eeeeee" glyphName="CLOSE" opacity="0.87" size="15">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                  </JFXButton>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" layoutY="620.0" prefHeight="100.0" prefWidth="329.0">
-               <children>
-                  <ImageView disable="true" fitHeight="75.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../asset_public/image/riotLogo.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </ImageView>
-                  <Line endX="100.0" startX="99.99992370605469" startY="-64.82466125488281" stroke="#7c582c" />
-                  <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="280.0">
-                     <children>
-                        <JFXCheckBox fx:id="checkboxAnimation" checkedColor="#109c5600" focusTraversable="false" onAction="#checkboxes" stylesheets="@../asset_public/css/application.css" text="Tắt hoạt ảnh đăng ký" textFill="#a4a4a4">
-                           <VBox.margin>
-                              <Insets left="15.0" top="10.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                           <styleClass>
-                              <String fx:value="check-box" />
-                              <String fx:value="boxes" />
-                           </styleClass>
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </JFXCheckBox>
-                        <JFXCheckBox fx:id="checkboxMusic" checkedColor="#109c5600" focusTraversable="false" onAction="#checkboxes" stylesheets="@../asset_public/css/application.css" text="Tắt nhạc đăng ký" textFill="#a4a4a4">
-                           <VBox.margin>
-                              <Insets left="15.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="5.0" top="5.0" />
-                           </padding>
-                           <styleClass>
-                              <String fx:value="boxes" />
-                              <String fx:value="check-box" />
-                           </styleClass>
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </JFXCheckBox>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <GridPane layoutX="784.0" layoutY="61.0" prefHeight="625.0" prefWidth="446.0" style="-fx-background-color: #010a12a1;">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="100.0" minHeight="0.0" prefHeight="52.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="474.0" minHeight="10.0" prefHeight="465.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="426.0">
-                     <children>
-                        <Text fill="#c3c3c3" strokeType="OUTSIDE" strokeWidth="0.0" text="Đăng ký">
-                           <font>
-                              <Font name="Segoe UI" size="25.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="419.0" prefWidth="396.0" GridPane.rowIndex="1">
-                     <children>
-                        <Line endX="442.4522399902344" endY="11.100532531738281" opacity="0.82" startX="41.15935134887695" startY="11.100531578063965" stroke="#a38335">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Line>
-                        <Text fill="#aeaeae" strokeType="OUTSIDE" strokeWidth="0.0" text="Tên đăng nhập">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <TextField fx:id="txtUsername" prefHeight="25.0" prefWidth="371.0" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="7.0" left="5.0" top="7.0" />
-                           </padding>
-                        </TextField>
-                        <Label fx:id="msgUsername" focusTraversable="false" styleClass="msg-error" stylesheets="@../asset_public/css/application.css" text="* Tài khoản đã tồn tại" visible="false" />
-                        <Text fill="#aeaeae" strokeType="OUTSIDE" strokeWidth="0.0" text="Mật khẩu">
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="15.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <PasswordField fx:id="txtPassword" prefHeight="25.0" prefWidth="371.0" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
-                           <padding>
-                              <Insets bottom="7.0" left="5.0" top="7.0" />
-                           </padding>
-                        </PasswordField>
-                        <Label fx:id="msgPassword" focusTraversable="false" styleClass="msg-error" stylesheets="@../asset_public/css/application.css" text="Mật khẩu quá dài" visible="false" />
-                        <Text fill="#aeaeae" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập lại mật khẩu">
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="15.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <PasswordField fx:id="txtRePassword" prefHeight="25.0" prefWidth="371.0" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
-                           <padding>
-                              <Insets bottom="7.0" left="5.0" top="7.0" />
-                           </padding>
-                        </PasswordField>
-                        <Label fx:id="msgRePassword" focusTraversable="false" styleClass="msg-error" stylesheets="@../asset_public/css/application.css" text="Mật khẩu không khớp" visible="false" />
-                        <Text fill="#aeaeae" strokeType="OUTSIDE" strokeWidth="0.0" text="Số điện thoại">
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="15.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <TextField fx:id="txtPhone" prefHeight="25.0" prefWidth="371.0" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
-                           <padding>
-                              <Insets bottom="7.0" left="5.0" top="7.0" />
-                           </padding>
-                        </TextField>
-                        <Label fx:id="msgPhone" focusTraversable="false" styleClass="msg-error" stylesheets="@../asset_public/css/application.css" text="Số điện thoại sai" visible="false" />
-                        <Text fill="#aeaeae" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="15.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <TextField fx:id="txtEmail" prefHeight="25.0" prefWidth="371.0" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
-                           <padding>
-                              <Insets bottom="7.0" left="5.0" top="7.0" />
-                           </padding>
-                        </TextField>
-                        <Label fx:id="msgEmail" focusTraversable="false" styleClass="msg-error" stylesheets="@../asset_public/css/application.css" text="Email sai định dạng" visible="false" />
-                     </children>
-                     <GridPane.margin>
-                        <Insets left="15.0" right="15.0" />
-                     </GridPane.margin>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
-                     <children>
-                        <Line endX="442.4522399902344" endY="11.100532531738281" opacity="0.83" startX="41.15935134887695" startY="11.100531578063965" stroke="#a38335">
-                           <VBox.margin>
-                              <Insets top="-20.0" />
-                           </VBox.margin>
-                        </Line>
-                        <JFXButton fx:id="btnRegister" alignment="CENTER" buttonType="RAISED" onMouseClicked="#register" prefHeight="38.0" prefWidth="257.0" ripplerFill="#11383b" styleClass="btn-login" stylesheets="@../asset_public/css/application.css" text="ĐĂNG KÝ">
-                           <VBox.margin>
-                              <Insets top="17.0" />
-                           </VBox.margin>
-                        </JFXButton>
-                     </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </GridPane>
+                  </MaterialDesignIconView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
          </children>
-      </AnchorPane>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="620.0" prefHeight="100.0" prefWidth="329.0">
+         <children>
+            <ImageView disable="true" fitHeight="75.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asset_public/image/riotLogo.png" />
+               </image>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </ImageView>
+            <Line endX="100.0" startX="99.99992370605469" startY="-64.82466125488281" stroke="#7c582c" />
+            <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="280.0">
+               <children>
+                  <JFXCheckBox fx:id="checkboxAnimation" checkedColor="#109c5600" focusTraversable="false" onAction="#checkboxes" stylesheets="@../asset_public/css/application.css" text="Tắt hoạt ảnh đăng ký" textFill="#a4a4a4">
+                     <VBox.margin>
+                        <Insets left="15.0" top="10.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                     <styleClass>
+                        <String fx:value="check-box" />
+                        <String fx:value="boxes" />
+                     </styleClass>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </JFXCheckBox>
+                  <JFXCheckBox fx:id="checkboxMusic" checkedColor="#109c5600" focusTraversable="false" onAction="#checkboxes" stylesheets="@../asset_public/css/application.css" text="Tắt nhạc đăng ký" textFill="#a4a4a4">
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
+                     <styleClass>
+                        <String fx:value="boxes" />
+                        <String fx:value="check-box" />
+                     </styleClass>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </JFXCheckBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <GridPane layoutX="784.0" layoutY="61.0" prefHeight="625.0" prefWidth="446.0" style="-fx-background-color: #010a12a1;">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="100.0" minHeight="0.0" prefHeight="52.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="474.0" minHeight="10.0" prefHeight="465.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <VBox alignment="CENTER" prefHeight="100.0" prefWidth="426.0">
+               <children>
+                  <Text fx:id="titleRegister" fill="#c3c3c3" strokeType="OUTSIDE" strokeWidth="0.0" text="Đăng ký">
+                     <font>
+                        <Font name="Segoe UI" size="25.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+            <VBox prefHeight="419.0" prefWidth="396.0" GridPane.rowIndex="1">
+               <children>
+                  <Line endX="442.4522399902344" endY="11.100532531738281" opacity="0.82" startX="41.15935134887695" startY="11.100531578063965" stroke="#a38335">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Line>
+                  <Text fill="#aeaeae" strokeType="OUTSIDE" strokeWidth="0.0" text="Tên đăng nhập">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="txtUsername" prefHeight="25.0" prefWidth="371.0" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="7.0" left="5.0" top="7.0" />
+                     </padding>
+                  </TextField>
+                  <Label fx:id="msgUsername" focusTraversable="false" styleClass="msg-error" stylesheets="@../asset_public/css/application.css" text="* Tài khoản đã tồn tại" visible="false" />
+                  <Text fill="#aeaeae" strokeType="OUTSIDE" strokeWidth="0.0" text="Mật khẩu">
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <PasswordField fx:id="txtPassword" prefHeight="25.0" prefWidth="371.0" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
+                     <padding>
+                        <Insets bottom="7.0" left="5.0" top="7.0" />
+                     </padding>
+                  </PasswordField>
+                  <Label fx:id="msgPassword" focusTraversable="false" styleClass="msg-error" stylesheets="@../asset_public/css/application.css" text="Mật khẩu quá dài" visible="false" />
+                  <Text fill="#aeaeae" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập lại mật khẩu">
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <PasswordField fx:id="txtRePassword" prefHeight="25.0" prefWidth="371.0" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
+                     <padding>
+                        <Insets bottom="7.0" left="5.0" top="7.0" />
+                     </padding>
+                  </PasswordField>
+                  <Label fx:id="msgRePassword" focusTraversable="false" styleClass="msg-error" stylesheets="@../asset_public/css/application.css" text="Mật khẩu không khớp" visible="false" />
+                  <Text fill="#aeaeae" strokeType="OUTSIDE" strokeWidth="0.0" text="Số điện thoại">
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="txtPhone" prefHeight="25.0" prefWidth="371.0" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
+                     <padding>
+                        <Insets bottom="7.0" left="5.0" top="7.0" />
+                     </padding>
+                  </TextField>
+                  <Label fx:id="msgPhone" focusTraversable="false" styleClass="msg-error" stylesheets="@../asset_public/css/application.css" text="Số điện thoại sai" visible="false" />
+                  <Text fill="#aeaeae" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="txtEmail" prefHeight="25.0" prefWidth="371.0" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
+                     <padding>
+                        <Insets bottom="7.0" left="5.0" top="7.0" />
+                     </padding>
+                  </TextField>
+                  <Label fx:id="msgEmail" focusTraversable="false" styleClass="msg-error" stylesheets="@../asset_public/css/application.css" text="Email sai định dạng" visible="false" />
+               </children>
+               <GridPane.margin>
+                  <Insets left="15.0" right="15.0" />
+               </GridPane.margin>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+               <children>
+                  <Line endX="442.4522399902344" endY="11.100532531738281" opacity="0.83" startX="41.15935134887695" startY="11.100531578063965" stroke="#a38335">
+                     <VBox.margin>
+                        <Insets top="-20.0" />
+                     </VBox.margin>
+                  </Line>
+                  <JFXButton fx:id="btnRegister" alignment="CENTER" buttonType="RAISED" onMouseClicked="#register" prefHeight="38.0" prefWidth="257.0" ripplerFill="#11383b" styleClass="btn-login" stylesheets="@../asset_public/css/application.css" text="ĐĂNG KÝ">
+                     <VBox.margin>
+                        <Insets top="17.0" />
+                     </VBox.margin>
+                  </JFXButton>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </GridPane>
+      <Pane fx:id="btnBackLogin" layoutX="40.0" layoutY="25.0" onMouseClicked="#backLogin" prefHeight="53.0" prefWidth="184.0" style="-fx-cursor: hand;">
+         <children>
+            <ImageView fitHeight="53.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asset_public/image/arrow-left.png" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" layoutX="66.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quay lại" wrappingWidth="106.5">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
    </children>
-</StackPane>
+</AnchorPane>

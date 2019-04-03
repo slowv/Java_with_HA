@@ -5,11 +5,15 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.Account;
 import model.ConnectionDb;
 
 import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
-public class Main extends Application {
+public class MainThread extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
@@ -34,6 +38,13 @@ public class Main extends Application {
 
 
         stage.show();
+
+//        Connection connection =
+//                DriverManager
+//                        .getConnection("jdbc:mysql://localhost/databasebName?user=root&password=");
+//        PreparedStatement preparedStatement = connection.prepareStatement("select * from tablename where column1 = ?");
+//        preparedStatement.setString(1, "column1");
+//        preparedStatement.execute();
     }
 
 

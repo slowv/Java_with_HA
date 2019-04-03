@@ -5,8 +5,15 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.events.JFXDialogEvent;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
@@ -14,8 +21,19 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import model.Account;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+
+import java.io.IOException;
 
 public class GlobalController {
+
+    public static SessionFactory factory;
+    public static ServiceRegistry serviceRegistry;
 
     public void exitProgram(JFXButton button) {
         Stage stage = (Stage) button.getScene().getWindow();
@@ -85,6 +103,31 @@ public class GlobalController {
         } else {
             mediaPlayer.setMute(false);
         }
+    }
+
+    public void switchScene(JFXButton button, StackPane stackPane, AnchorPane oldChild, String urlFXML) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource(urlFXML));
+        Scene scene = button.getScene();
+
+        parent.translateXProperty().set(scene.getWidth());
+        stackPane.getChildren().add(parent);
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(parent.translateXProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.setOnFinished(event -> {
+            stackPane.getChildren().remove(oldChild);
+        });
+        timeline.play();
+    }
+
+    public static void addAllConfigsAccount(){
+
+        Configuration configuration = new Configuration();
+        configuration.configure();
+        configuration.addAnnotatedClass(Account.class);
+        serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+        factory = configuration.buildSessionFactory(serviceRegistry);
     }
 
 }

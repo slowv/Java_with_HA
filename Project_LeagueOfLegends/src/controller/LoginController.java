@@ -7,6 +7,12 @@ import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.events.JFXDialogEvent;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,6 +23,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.MouseEvent;
@@ -30,6 +37,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Account;
 
 import javax.swing.*;
 import java.io.File;
@@ -44,6 +52,10 @@ public class LoginController implements Initializable {
     public AnchorPane anchorPane;
     @FXML
     public TextField txtUsername;
+    @FXML
+    public PasswordField txtPassword;
+    @FXML
+    public Label msgLogin;
     @FXML
     public JFXButton btnMinimize;
     @FXML
@@ -93,7 +105,23 @@ public class LoginController implements Initializable {
 
         mediaPlayer.setAutoPlay(true);
 
-        // Sử lý css
+        // Sử lý msg login
+        txtUsername.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue){
+                    msgLogin.setVisible(false);
+                }
+            }
+        });
+        txtPassword.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue){
+                    msgLogin.setVisible(false);
+                }
+            }
+        });
     }
 
     public void closeProgram(ActionEvent event) {
@@ -113,13 +141,32 @@ public class LoginController implements Initializable {
     }
 
     public void toPageRegister(MouseEvent mouseEvent) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("../views/Register.fxml"));
-        Scene scene = new Scene(parent);
-
-        Stage window = (Stage) hyperLinkCreateAccount.getScene().getWindow();
-
-        window.setScene(scene);
         mediaPlayer.stop();
-        window.show();
+        globalController.switchScene(closeBtn, stackpane, anchorPane, "../views/Register.fxml");
+
+    }
+
+    public void login(MouseEvent mouseEvent) {
+        RegisterController controller =  new RegisterController();
+
+        if (!controller.checkExistUsername(txtUsername.getText())){
+            msgLogin.setText("Tài khoản hoặc mật khẩu không đúng!");
+            if (!msgLogin.isVisible()){
+                msgLogin.setVisible(true);
+            }
+            return;
+        }
+
+        Account account = new Account();
+        account.setUsername(txtUsername.getText());
+        account.setPassword(txtPassword.getText());
+
+        boolean checkLogin  = account.checkLogin();
+        if (checkLogin){
+            System.out.println("Login success!");
+        }
+        else{
+            System.out.println("Login fail!");
+        }
     }
 }

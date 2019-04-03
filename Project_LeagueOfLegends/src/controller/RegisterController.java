@@ -4,29 +4,43 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Account;
-import org.hibernate.*;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.hibernate.service.ServiceRegistry;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
@@ -34,9 +48,6 @@ public class RegisterController implements Initializable {
     // VAR fxml
     @FXML
     private MediaView mediaView;
-
-    @FXML
-    private StackPane stackPane;
 
     @FXML
     private AnchorPane anchorPane;
@@ -65,6 +76,9 @@ public class RegisterController implements Initializable {
     private Label msgPassword;
 
     @FXML
+    private Text titleRegister;
+
+    @FXML
     private PasswordField txtRePassword;
 
     @FXML
@@ -91,9 +105,6 @@ public class RegisterController implements Initializable {
 
     // VAR controller
     GlobalController globalController = new GlobalController();
-
-    private static SessionFactory factory;
-    private static ServiceRegistry serviceRegistry;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -162,7 +173,7 @@ public class RegisterController implements Initializable {
     }
 
     public RegisterController(){
-        addAllConfigs();
+        GlobalController.addAllConfigsAccount();
     }
 
 
@@ -171,6 +182,7 @@ public class RegisterController implements Initializable {
     }
 
     public void closeProgram(ActionEvent actionEvent) {
+        StackPane stackPane = (StackPane) anchorPane.getScene().getRoot();
         globalController.dialogConfirmExit(stackPane, anchorPane, closeBtn);
     }
 
@@ -178,13 +190,7 @@ public class RegisterController implements Initializable {
         globalController.checkboxesClient(checkboxAnimation, checkboxMusic, mediaPlayer);
     }
 
-    public static void addAllConfigs(){
-        Configuration configuration = new Configuration();
-        configuration.configure();
-        configuration.addAnnotatedClass(Account.class);
-        serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-        factory = configuration.buildSessionFactory(serviceRegistry);
-    }
+
 
 
     public void register(MouseEvent mouseEvent) {
@@ -229,28 +235,41 @@ public class RegisterController implements Initializable {
             return;
         }
 
-        Session session = factory.openSession();
-        Transaction transaction = null;
-        Account account = null;
-        try {
-            transaction = session.beginTransaction();
-            account = new Account(txtUsername.getText(), txtPassword.getText(),txtEmail.getText() ,txtPhone.getText());
-            session.save(account);
-            System.out.println(account.getId());
-            transaction.commit();
-            System.out.println("đăng ký thành công!");
-        }catch (HibernateException e){
-            e.printStackTrace();
-            if (transaction != null){
-                transaction.rollback();
-            }
-        }finally {
-            session.close();
+        Account account = new Account(txtUsername.getText(), txtPassword.getText(),txtEmail.getText() ,txtPhone.getText());
+        boolean checkRegister = (boolean) account.insert(account, titleRegister);
+        if (checkRegister){
+            Task<Void> sleeper = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    try {
+                        Thread.sleep(3000);
+                    }catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+            };
+            sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                @Override
+                public void handle(WorkerStateEvent event) {
+                    try {
+                        Parent parent = FXMLLoader.load(getClass().getResource("../views/Home.fxml"));
+                        Scene scene = new Scene(parent);
+                        Stage window = (Stage) titleRegister.getScene().getWindow();
+                        window.setScene(scene);
+                        mediaPlayer.stop();
+                        window.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            new Thread(sleeper).start();
         }
     }
 
     public boolean checkExistEmail(String email){
-        Session session = factory.openSession();
+        Session session = GlobalController.factory.openSession();
         Transaction transaction = null;
         boolean check = false;
         try {
@@ -277,7 +296,7 @@ public class RegisterController implements Initializable {
     }
 
     public boolean checkExistUsername(String username){
-        Session session = factory.openSession();
+        Session session = GlobalController.factory.openSession();
         Transaction transaction = null;
         boolean check = false;
         try {
@@ -304,7 +323,7 @@ public class RegisterController implements Initializable {
     }
 
     public boolean checkExistPhone(String phone){
-        Session session = factory.openSession();
+        Session session = GlobalController.factory.openSession();
         Transaction transaction = null;
         boolean check = false;
         try {
@@ -330,6 +349,12 @@ public class RegisterController implements Initializable {
         return check;
     }
 
+    @FXML
+    private Pane btnBackLogin;
 
-
+    public void backLogin(MouseEvent mouseEvent) throws IOException {
+        StackPane stackPane = (StackPane) btnBackLogin.getScene().getRoot();
+        mediaPlayer.stop();
+        globalController.switchScene(closeBtn, stackPane, anchorPane, "../views/Login.fxml");
+    }
 }

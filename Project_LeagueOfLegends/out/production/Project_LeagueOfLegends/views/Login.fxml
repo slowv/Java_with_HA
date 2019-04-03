@@ -7,6 +7,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -22,8 +23,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="stackpane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1"
-           xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<StackPane fx:id="stackpane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../asset_public/css/application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
       <AnchorPane fx:id="anchorPane" prefHeight="720.0" prefWidth="1280.0">
           <MediaView fx:id="mediaView" fitHeight="720.0" fitWidth="1280.0" />
@@ -86,12 +86,20 @@
                   <Insets top="50.0" />
                </VBox.margin>
                <children>
+                  <Label fx:id="msgLogin" focusTraversable="false" styleClass="msg-error" text="Tài khoản hoặc mật khẩu không đúng!" visible="false" wrapText="true">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
                   <Text fill="#b5b5b5" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Tài khoản">
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin>
                   </Text>
-                  <TextField fx:id="txtPassword" focusTraversable="false" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
+                  <TextField fx:id="txtUsername" focusTraversable="false" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
                      <padding>
                         <Insets bottom="8.0" left="5.0" top="8.0" />
                      </padding>
@@ -104,7 +112,7 @@
                         <Insets bottom="5.0" top="11.0" />
                      </VBox.margin>
                   </Text>
-                  <PasswordField focusTraversable="false" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
+                  <PasswordField fx:id="txtPassword" focusTraversable="false" styleClass="bg-none" stylesheets="@../asset_public/css/application.css">
                      <padding>
                         <Insets bottom="8.0" left="5.0" top="8.0" />
                      </padding>
@@ -126,7 +134,7 @@
                   </HBox>
                   <VBox alignment="BOTTOM_CENTER" prefHeight="172.0" prefWidth="210.0">
                      <children>
-                        <JFXButton buttonType="RAISED" prefHeight="25.0" prefWidth="221.0" style="-fx-border-radius: 0;" styleClass="btn-login" stylesheets="@../asset_public/css/application.css" text="ĐĂNG NHẬP" textFill="#757575">
+                        <JFXButton buttonType="RAISED" onMouseClicked="#login" prefHeight="25.0" prefWidth="221.0" style="-fx-border-radius: 0;" styleClass="btn-login" stylesheets="@../asset_public/css/application.css" text="ĐĂNG NHẬP" textFill="#757575">
                            <ripplerFill>
                               <LinearGradient endX="0.5523809523809524" endY="1.0" startX="0.5285714285714286" startY="0.4">
                                  <stops>
