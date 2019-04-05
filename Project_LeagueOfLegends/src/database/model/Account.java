@@ -65,25 +65,11 @@ public class Account {
     @Column
     private int status;
 
-    public enum AccountStatus {
-        ACTIVE(1), DEACTIVE(0), DELETED(-1);
-        private int code;
-
-        AccountStatus(int code){
-            this.code = code;
-        }
-
-//        public int toInt() {
-//            return code;
-//        }
-
-    }
-
     public Account() {
         long now = System.currentTimeMillis();
         this.created_at = now;
         this.updated_at = now;
-        this.status = AccountStatus.ACTIVE.code;
+        this.status = AccountStatus.ACTIVE.toInt();
     }
 
     public Account(String username, String password, String email, String phone) {
@@ -94,7 +80,7 @@ public class Account {
         this.phone = phone;
         this.created_at = now;
         this.updated_at = now;
-        this.status = AccountStatus.ACTIVE.code;
+        this.status = AccountStatus.ACTIVE.toInt();
     }
 
     public String getPhone() {
@@ -230,6 +216,20 @@ public class Account {
     public void setStatus(int status) {
         this.status = status;
     }
+}
+
+enum AccountStatus {
+    ACTIVE(1), DEACTIVE(0), DELETED(-1);
+    private int code;
+
+    AccountStatus(int code){
+        this.code = code;
+    }
+
+    public int toInt() {
+        return code;
+    }
+
 }
 
 
