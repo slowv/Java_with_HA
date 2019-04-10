@@ -57,7 +57,7 @@
 }
 
 .check-box:selected .box {
-    -fx-background-color: #transparent !important;
+    -fx-background-color: transparent !important;
     -fx-border-color: #a57b34;
 }
 

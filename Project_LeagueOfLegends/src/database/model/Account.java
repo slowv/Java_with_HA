@@ -1,16 +1,8 @@
-package model;
+package database.model;
 
 import controller.GlobalController;
-import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,7 +11,6 @@ import org.hibernate.query.Query;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.IOException;
 
 @Entity
 @Table(name = "Account", uniqueConstraints = {
@@ -124,6 +115,11 @@ public class Account {
             }
         }catch (HibernateException e){
             e.printStackTrace();
+            if (transaction != null){
+                transaction.rollback();
+            }
+        }finally {
+            session.close();
         }
         return false;
     }

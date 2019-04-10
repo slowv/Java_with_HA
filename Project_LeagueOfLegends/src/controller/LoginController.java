@@ -3,43 +3,27 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.events.JFXDialogEvent;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
-import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.Account;
+import database.model.Account;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -86,6 +70,9 @@ public class LoginController implements Initializable {
     @FXML
     private Hyperlink hyperLinkCreateAccount;
 
+    @FXML
+    private Label statusLogin;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Sử lý media
@@ -109,7 +96,7 @@ public class LoginController implements Initializable {
         txtUsername.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue){
+                if (newValue) {
                     msgLogin.setVisible(false);
                 }
             }
@@ -117,7 +104,7 @@ public class LoginController implements Initializable {
         txtPassword.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue){
+                if (newValue) {
                     msgLogin.setVisible(false);
                 }
             }
@@ -147,11 +134,11 @@ public class LoginController implements Initializable {
     }
 
     public void login(MouseEvent mouseEvent) {
-        RegisterController controller =  new RegisterController();
+        RegisterController controller = new RegisterController();
 
-        if (!controller.checkExistUsername(txtUsername.getText())){
+        if (!controller.checkExistUsername(txtUsername.getText())) {
             msgLogin.setText("Tài khoản hoặc mật khẩu không đúng!");
-            if (!msgLogin.isVisible()){
+            if (!msgLogin.isVisible()) {
                 msgLogin.setVisible(true);
             }
             return;
@@ -161,11 +148,24 @@ public class LoginController implements Initializable {
         account.setUsername(txtUsername.getText());
         account.setPassword(txtPassword.getText());
 
-        boolean checkLogin  = account.checkLogin();
-        if (checkLogin){
-            System.out.println("Login success!");
-        }
-        else{
+        statusLogin.setText("Authenting...");
+        statusLogin.setVisible(true);
+        boolean checkLogin = account.checkLogin();
+        if (checkLogin) {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+                try {
+                    statusLogin.setText("Loading...");
+                    mediaPlayer.stop();
+                    globalController.switchScene(closeBtn, stackpane, anchorPane, "../views/Home.fxml");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }));
+            timeline.play();
+        } else {
+            statusLogin.setVisible(false);
+            msgLogin.setText("Tài khoản hoặc mật khẩu không đúng!");
+            msgLogin.setVisible(true);
             System.out.println("Login fail!");
         }
     }

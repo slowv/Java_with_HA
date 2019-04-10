@@ -9,11 +9,7 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -24,19 +20,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.Account;
+import database.model.Account;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-import org.hibernate.service.ServiceRegistry;
 
 import java.io.File;
 import java.io.IOException;
@@ -253,12 +243,8 @@ public class RegisterController implements Initializable {
                 @Override
                 public void handle(WorkerStateEvent event) {
                     try {
-                        Parent parent = FXMLLoader.load(getClass().getResource("../views/Home.fxml"));
-                        Scene scene = new Scene(parent);
-                        Stage window = (Stage) titleRegister.getScene().getWindow();
-                        window.setScene(scene);
                         mediaPlayer.stop();
-                        window.show();
+                        globalController.switchScene(closeBtn, (StackPane) closeBtn.getScene().getRoot(), anchorPane, "../views/Home.fxml");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
