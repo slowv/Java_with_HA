@@ -33,7 +33,7 @@ public class ThreadCloneData implements Runnable {
         NewspaperModel model = null;
         try {
             model = new NewspaperModel();
-            model.truncateDb();
+//            model.truncateDb();
         } catch (SQLException e) {
             e.printStackTrace();
         }

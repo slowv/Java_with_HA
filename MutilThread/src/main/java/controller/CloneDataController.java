@@ -15,7 +15,6 @@ public class CloneDataController implements CloneData{
         while (!executor.isTerminated()){
 
         }
-
         System.out.println("Lấy tin thành công! hoàn thành tất cả thread.");
     }
 }
