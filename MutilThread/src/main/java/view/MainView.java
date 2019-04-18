@@ -4,10 +4,11 @@ import controller.CloneData;
 import controller.CloneDataController;
 import thread.ThreadCloneData;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class MainView {
-    public void menu(){
+    public void menu() throws SQLException {
         Runnable thread = null;
         CloneData controller = new CloneDataController();
 
@@ -36,7 +37,6 @@ public class MainView {
         if (choice == 3){
             System.exit(1);
         }
-
         if (thread != null){
             controller.cloneData(thread);
         }

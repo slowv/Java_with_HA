@@ -59,4 +59,33 @@ public class NewspaperModel {
         }
         return false;
     }
+
+    public String getUrl(){
+        try {
+            PreparedStatement stt = cnn.prepareStatement("SELECT `url` from `newspaperclone` where `index` = ?");
+            stt.setMaxRows(1);
+            stt.setInt(1, 0);
+            ResultSet rs = stt.executeQuery();
+            if (rs.next()){
+                return rs.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean update(String url){
+        try {
+            PreparedStatement stt = cnn.prepareStatement("UPDATE `newspaperclone` set `index` = ? where `url` = ? ");
+            stt.setInt(1, 1);
+            stt.setString(2, url);
+            stt.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }
