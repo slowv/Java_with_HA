@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class MainView {
     public void menu() throws SQLException {
-        Runnable thread = null;
+        ThreadCloneData thread = null;
         CloneData controller = new CloneDataController();
 
         Scanner sc = new Scanner(System.in);
@@ -38,7 +38,7 @@ public class MainView {
             System.exit(1);
         }
         if (thread != null){
-            controller.cloneData(thread);
+            controller.cloneData(thread.getUrlClone());
         }
     }
 }
