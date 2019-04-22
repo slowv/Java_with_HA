@@ -1,6 +1,7 @@
 package database.model;
 
 import controller.GlobalController;
+import controller.HomeController;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import org.hibernate.HibernateException;
@@ -12,16 +13,17 @@ import org.hibernate.query.Query;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import static controller.HomeController.*;
+import static mainThread.MainThread.currentLogin;
+
 @Entity
 @Table(name = "Account", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")
 })
 public class Account {
-    public static Account currentLogin = new Account();
-
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid",  strategy = "uuid2")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "varchar(60)")
     private String id;
 
@@ -74,6 +76,16 @@ public class Account {
         this.status = AccountStatus.ACTIVE.toInt();
     }
 
+    public Account(String id, String username, String password, String email, long created_at, String phone, int status) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.created_at = created_at;
+        this.phone = phone;
+        this.status = status;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -97,52 +109,66 @@ public class Account {
                 '}';
     }
 
-    public boolean checkLogin(){
+    public boolean checkLogin() {
         Session session = GlobalController.factory.openSession();
         Transaction transaction = null;
         Account result = null;
-        try{
+        try {
             transaction = session.beginTransaction();
             Query query = session.createQuery("from Account where username = :username");
             query.setMaxResults(1);
             query.setParameter("username", this.username);
             result = (Account) query.uniqueResult();
 
-            if (result != null){
-                if (result.getUsername().equals(this.username) && result.getPassword().equals(this.password)){
+            if (result != null) {
+                if (result.getUsername().equals(this.username) && result.getPassword().equals(this.password)) {
+                    currentLogin.setId(result.getId());
+                    currentLogin.setUsername(result.getUsername());
+                    currentLogin.setPassword(result.getPassword());
+                    currentLogin.setEmail(result.getEmail());
+                    currentLogin.setCreated_at(result.getCreated_at());
+                    currentLogin.setPhone(result.getPhone());
+                    currentLogin.setStatus(result.getStatus());
+                    System.out.println(currentLogin.toString());
                     return true;
                 }
             }
-        }catch (HibernateException e){
+        } catch (HibernateException e) {
             e.printStackTrace();
-            if (transaction != null){
+            if (transaction != null) {
                 transaction.rollback();
             }
-        }finally {
+        } finally {
             session.close();
         }
         return false;
     }
 
-    public boolean insert(Account account, Text titleRegister){
+    public boolean insert(Account account, Text titleRegister) {
         Session session = GlobalController.factory.openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
             session.save(account);
             transaction.commit();
-            Account.currentLogin = account;
+            currentLogin.setId(account.getId());
+            currentLogin.setUsername(account.getUsername());
+            currentLogin.setPassword(account.getPassword());
+            currentLogin.setEmail(account.getEmail());
+            currentLogin.setCreated_at(account.getCreated_at());
+            currentLogin.setPhone(account.getPhone());
+            currentLogin.setStatus(account.getStatus());
             titleRegister.setText("Đăng ký thành công!");
             titleRegister.setFill(Color.web("#59A869"));
             System.out.println("Đăng ký thành công!");
             return true;
 
-        }catch (HibernateException e){
+        } catch (HibernateException e) {
             e.printStackTrace();
-            if (transaction != null){
+            if (transaction != null) {
                 transaction.rollback();
             }
-        }finally {
+        } finally {
             session.close();
         }
         return false;
@@ -218,14 +244,13 @@ enum AccountStatus {
     ACTIVE(1), DEACTIVE(0), DELETED(-1);
     private int code;
 
-    AccountStatus(int code){
+    AccountStatus(int code) {
         this.code = code;
     }
 
     public int toInt() {
         return code;
     }
-
 }
 
 

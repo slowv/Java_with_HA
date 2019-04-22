@@ -119,7 +119,7 @@ public class RegisterController implements Initializable {
         txtUsername.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue){
+                if (newValue) {
                     msgUsername.setVisible(false);
                 }
             }
@@ -128,7 +128,7 @@ public class RegisterController implements Initializable {
         txtPassword.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue){
+                if (newValue) {
                     msgPassword.setVisible(false);
                 }
             }
@@ -137,7 +137,7 @@ public class RegisterController implements Initializable {
         txtRePassword.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue){
+                if (newValue) {
                     msgRePassword.setVisible(false);
                 }
             }
@@ -146,7 +146,7 @@ public class RegisterController implements Initializable {
         txtEmail.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue){
+                if (newValue) {
                     msgEmail.setVisible(false);
                 }
             }
@@ -155,14 +155,14 @@ public class RegisterController implements Initializable {
         txtPhone.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue){
+                if (newValue) {
                     msgPhone.setVisible(false);
                 }
             }
         });
     }
 
-    public RegisterController(){
+    public RegisterController() {
         GlobalController.addAllConfigsAccount();
     }
 
@@ -181,59 +181,57 @@ public class RegisterController implements Initializable {
     }
 
 
-
-
     public void register(MouseEvent mouseEvent) {
         RegisterController controller = new RegisterController();
-        if (controller.checkExistUsername(txtUsername.getText())){
+        if (controller.checkExistUsername(txtUsername.getText())) {
             msgUsername.setText("* Tài khoản đã tồn tại vui lòng chọn tài khoản khác!");
-            if (!msgUsername.isVisible()){
+            if (!msgUsername.isVisible()) {
                 msgUsername.setVisible(true);
             }
             return;
         }
 
-        if (txtPassword.getText().length() < 6){
+        if (txtPassword.getText().length() < 6) {
             msgPassword.setText("* Mật khẩu ít nhất phải 6 ký tự.");
-            if (!msgPassword.isVisible()){
+            if (!msgPassword.isVisible()) {
                 msgPassword.setVisible(true);
             }
             return;
         }
 
-        if (!txtRePassword.getText().equals(txtPassword.getText())){
+        if (!txtRePassword.getText().equals(txtPassword.getText())) {
             msgRePassword.setText("Mật khẩu không khớp, vui lòng nhập lại!");
-            if (!msgRePassword.isVisible()){
+            if (!msgRePassword.isVisible()) {
                 msgRePassword.setVisible(true);
             }
             return;
         }
 
-        if (controller.checkExistPhone(txtPhone.getText())){
+        if (controller.checkExistPhone(txtPhone.getText())) {
             msgPhone.setText("Số điện thoại đã tồn tại, vui lòng nhập số khác!");
-            if (!msgPhone.isVisible()){
+            if (!msgPhone.isVisible()) {
                 msgPhone.setVisible(true);
             }
             return;
         }
 
-        if(controller.checkExistEmail(txtEmail.getText())){
+        if (controller.checkExistEmail(txtEmail.getText())) {
             msgEmail.setText("* Email đã tồn tại vui lòng chọn email khác!");
-            if (!msgEmail.isVisible()){
+            if (!msgEmail.isVisible()) {
                 msgEmail.setVisible(true);
             }
             return;
         }
 
-        Account account = new Account(txtUsername.getText(), txtPassword.getText(),txtEmail.getText() ,txtPhone.getText());
+        Account account = new Account(txtUsername.getText(), txtPassword.getText(), txtEmail.getText(), txtPhone.getText());
         boolean checkRegister = (boolean) account.insert(account, titleRegister);
-        if (checkRegister){
+        if (checkRegister) {
             Task<Void> sleeper = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
                     try {
                         Thread.sleep(3000);
-                    }catch (InterruptedException e){
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     return null;
@@ -254,7 +252,7 @@ public class RegisterController implements Initializable {
         }
     }
 
-    public boolean checkExistEmail(String email){
+    public boolean checkExistEmail(String email) {
         Session session = GlobalController.factory.openSession();
         Transaction transaction = null;
         boolean check = false;
@@ -264,7 +262,7 @@ public class RegisterController implements Initializable {
             query.setParameter("email", email);
             query.setMaxResults(1);
             Account result = (Account) query.uniqueResult();
-            if (result == null){
+            if (result == null) {
                 System.out.println("ok email không tồn tại :)~");
                 return check;
             }
@@ -272,16 +270,16 @@ public class RegisterController implements Initializable {
             transaction.commit();
             return !check;
 
-        }catch (HibernateException e){
+        } catch (HibernateException e) {
             e.printStackTrace();
             transaction.rollback();
-        }finally {
+        } finally {
             session.close();
         }
         return check;
     }
 
-    public boolean checkExistUsername(String username){
+    public boolean checkExistUsername(String username) {
         Session session = GlobalController.factory.openSession();
         Transaction transaction = null;
         boolean check = false;
@@ -291,7 +289,7 @@ public class RegisterController implements Initializable {
             query.setParameter("username", username);
             query.setMaxResults(1);
             Account result = (Account) query.uniqueResult();
-            if (result == null){
+            if (result == null) {
                 System.out.println("ok username không tồn tại :)~");
                 return check;
             }
@@ -299,16 +297,16 @@ public class RegisterController implements Initializable {
             transaction.commit();
             return !check;
 
-        }catch (HibernateException e){
+        } catch (HibernateException e) {
             e.printStackTrace();
             transaction.rollback();
-        }finally {
+        } finally {
             session.close();
         }
         return check;
     }
 
-    public boolean checkExistPhone(String phone){
+    public boolean checkExistPhone(String phone) {
         Session session = GlobalController.factory.openSession();
         Transaction transaction = null;
         boolean check = false;
@@ -318,7 +316,7 @@ public class RegisterController implements Initializable {
             query.setParameter("phone", phone);
             query.setMaxResults(1);
             Account result = (Account) query.uniqueResult();
-            if (result == null){
+            if (result == null) {
                 System.out.println("ok số điện thoại không tồn tại :)~");
                 return check;
             }
@@ -326,10 +324,10 @@ public class RegisterController implements Initializable {
             transaction.commit();
             return !check;
 
-        }catch (HibernateException e){
+        } catch (HibernateException e) {
             e.printStackTrace();
             transaction.rollback();
-        }finally {
+        } finally {
             session.close();
         }
         return check;

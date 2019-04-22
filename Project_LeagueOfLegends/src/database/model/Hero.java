@@ -17,7 +17,7 @@ public class Hero {
     @Column(name = "id", columnDefinition = "varchar(60)")
     private String id;
 
-    @Column(name = "name",columnDefinition = "varchar(191)", unique = true)
+    @Column(name = "name", columnDefinition = "varchar(191)", unique = true)
     @NotNull
     private String name;
 
@@ -134,14 +134,15 @@ public class Hero {
     }
 }
 
-enum  HeroStatus{
+enum HeroStatus {
     ACTIVE(1), REMOVED(0);
     private int code;
-    HeroStatus(int code){
+
+    HeroStatus(int code) {
         this.code = code;
     }
 
-    public int getInt(){
+    public int getInt() {
         return code;
     }
 }

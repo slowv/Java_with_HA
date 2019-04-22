@@ -1,5 +1,6 @@
 package mainThread;
 
+import database.model.Account;
 import database.model.ConnectionDb;
 import database.seeder.InitSeeder;
 import javafx.application.Application;
@@ -9,13 +10,18 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import sun.net.www.http.HttpClient;
 
-import java.io.FileInputStream;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class MainThread extends Application {
 
+    public static Account currentLogin = new Account();
+
     @Override
-    public void start(Stage stage) throws Exception{
+    public void start(Stage stage) throws Exception {
         // DB
         ConnectionDb connectionDb = new ConnectionDb();
         connectionDb.ConnectionDbMysql();
@@ -38,8 +44,34 @@ public class MainThread extends Application {
         // Cho phép thay đổi kích thước
         stage.setResizable(true);
 
-
         stage.show();
+
+        // TEST CALL API BY JAVAFX
+
+
+        // String keyword = "Buianhtuan";
+        // keyword.split("\\s+");
+
+        // System.out.println(keyword);
+        String keyword = "BuiAnhTuan";
+        URL url = new URL("https://content.googleapis.com/youtube/v3/search?q=" + keyword + "&type=video&maxResults=9&part=snippet&key=AIzaSyBfaWEIuvQuHlKqM3d0h8blst_xRREA3iw");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("Content-type", "application/json");
+        con.setUseCaches(false);
+        con.setDoOutput(true);
+
+        InputStream inputStream = con.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder response = new StringBuilder();
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            response.append(line);
+//            response.append("\r");
+        }
+        bufferedReader.close();
+        System.out.println(response.toString());
+        System.out.println(con.getResponseCode());
     }
 
 

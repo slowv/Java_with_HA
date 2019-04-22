@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -17,11 +18,17 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import static mainThread.MainThread.currentLogin;
 
 public class HomeController implements Initializable {
 
@@ -48,19 +55,35 @@ public class HomeController implements Initializable {
     @FXML
     private Button rBtn;
 
+    @FXML
+    private WebView webView;
+
+    private WebEngine webEngine;
+
+    @FXML
+    public Label labelUsername;
+
     ArrayList<String> list = new ArrayList<>();
     int j = 0;
     double orgReleaseSceneX, orgCliskSceneX;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        // Sử lý Avatar
         avatarUser.setStroke(Color.web("#f1f1f1", 0));
         Image image = new Image(getClass().getResource("../asset_public/image/face.jpg").toExternalForm(), false);
         avatarUser.setFill(new ImagePattern(image));
-//        avatarUser.setEffect(new DropShadow(+25d, 2 ,+2d, Color.web("#f1f1f1")));
+        labelUsername.setText(currentLogin.getUsername());
+        // Sử lý web view
 
-//        slideImage.setImage(new Image("https://lienminh.garena.vn/images/Lan_h3lpm3/vu%20khi%20toi%20thuong%20600x338.jpg"));
+        webEngine = webView.getEngine();
+
+        try {
+            webEngine.load(new File("src/views/html/Youtube.html").toURI().toURL().toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         //Sử lý slide show image
         list.add("https://lienminh.garena.vn/images/Lan_h3lpm3/Shen_PulsefireSkin%20full%20size.jpg");
         list.add("https://lienminh.garena.vn/images/Lan_h3lpm3/Twisted_Fate_PulsefireSkin%20full%20size.jpg");
@@ -107,6 +130,7 @@ public class HomeController implements Initializable {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+
     }
 
     EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {

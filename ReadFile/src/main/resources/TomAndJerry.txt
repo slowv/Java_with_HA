@@ -1,0 +1,10 @@
+   Ngày                Mã video                      Tiêu đề                        View
+16/04/2019             VID 00123                     Tom Jerry 01                   1500
+16/04/2019             VID 00124                     Tom Jerry 02                   1000
+16/04/2019             VID 00125                     Tom Jerry 03                   800
+17/04/2019             VID 00123                     Tom Jerry 01                   1800
+17/04/2019             VID 00124                     Tom Jerry 02                   500
+17/04/2019             VID 00125                     Tom Jerry 03                   300
+17/04/2019             VID 00126                     Tom Jerry 04                   100
+18/04/2019             VID 00123                     Tom Jerry 01                   1500
+18/04/2019             VID 00124                     Tom Jerry 02                   1300
